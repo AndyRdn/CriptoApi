@@ -1,0 +1,21 @@
+INSERT INTO Crypto (nom, daty) VALUES ('Bitcoin', '2023-01-01 10:00:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Ethereum', '2023-02-15 11:30:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Cardano', '2023-03-20 14:15:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Solana', '2023-04-10 09:45:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Polkadot', '2023-05-25 16:20:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Litecoin', '2023-06-30 12:00:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Ripple', '2023-07-18 08:30:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Avalanche', '2023-08-22 13:40:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Chainlink', '2023-09-05 19:10:00');
+INSERT INTO Crypto (nom, daty) VALUES ('Dogecoin', '2023-10-12 21:50:00');
+
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (3, 1, 45, 20, '2024-01-04 10:20:30', 1500.50);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (5, 2, 60, 15, '2023-11-28 15:45:10', 3200.75);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (7, 3, 45, 30, '2023-10-15 08:12:00', 750.30);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (2, 4, 80, 50, '2023-12-05 22:30:15', 5000.99);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (9, 5, 10, 5, '2024-01-01 12:00:00', 300.25);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (1, 1, 50, 20, '2023-09-18 18:25:00', 2200.40);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (4, 3, 30, 25, '2023-07-22 14:10:45', 1800.60);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (6, 2, 55, 35, '2023-08-30 09:15:00', 4100.80);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (8, 4, 20, 10, '2024-01-03 20:50:00', 1200.35);
+INSERT INTO mtv_crypto (id_crypto, id_user, achat, vente, daty, valeur) VALUES (10, 5, 70, 40, '2023-10-10 16:40:00', 6500.99);
