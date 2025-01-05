@@ -1,6 +1,5 @@
 package org.main.criptoapi.mvtCrypto;
 
-import org.main.criptoapi.crypto.Crypto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +22,4 @@ public class MvtCryptoController {
         }
     }
 
-    @GetMapping("/lol")
-    public String s() {
-        Crypto c = mvtCryptoService.sellCrypto();
-        return c.getNom();
-    }
 }
