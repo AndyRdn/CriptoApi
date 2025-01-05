@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.main.criptoapi.crypto.Crypto;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -32,7 +32,7 @@ public class MtvCrypto {
     private Integer vente;
 
     @Column(name = "daty")
-    private Instant daty;
+    private LocalDateTime daty;
 
     @Column(name = "valeur", precision = 15, scale = 2)
     private BigDecimal valeur;

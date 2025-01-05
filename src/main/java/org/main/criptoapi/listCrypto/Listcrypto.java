@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.main.criptoapi.crypto.Crypto;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,6 +22,6 @@ public class Listcrypto {
     private Crypto idCrypto;
 
     @Column(name = "daty")
-    private Instant daty;
+    private LocalDateTime daty;
 
 }

@@ -1,11 +1,11 @@
 package org.main.criptoapi.fonds;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.time.Instant;
 
 @Getter
 @Setter
@@ -27,6 +27,6 @@ public class Fond {
     private Double retrait;
 
     @Column(name = "daty")
-    private Instant daty;
+    private LocalDateTime daty;
 
 }
