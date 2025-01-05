@@ -32,12 +32,33 @@ public class MvtCryptoController {
     }
 
     @PostMapping("/sell")
-    public ResponseEntity<?> postMethodName(@RequestBody CryptoTransactionDTO cryptoInfo) {
+    public ResponseEntity<?> sellCrypto(@RequestBody CryptoTransactionDTO cryptoInfo) {
         Map<String, Object> bodyContent = new HashMap<>();
         try {
             Crypto c = cryptoRepository.findById(cryptoInfo.getIdCrypto()).get();
 
             mvtCryptoService.sellCrypto(cryptoInfo.getIdUser(), c, cryptoInfo.getQuantite());
+
+            bodyContent.put("success", true);
+            bodyContent.put("message", "Transaction successful");
+
+            return ResponseEntity.status(HttpStatus.OK).body(bodyContent);
+        } catch (IllegalArgumentException iae) {
+            bodyContent.put("success", false);
+            bodyContent.put("message", iae.getMessage());
+            return ResponseEntity.status(HttpStatus.OK).body(bodyContent);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/buy")
+    public ResponseEntity<?> buyCrypto(@RequestBody CryptoTransactionDTO cryptoInfo) {
+        Map<String, Object> bodyContent = new HashMap<>();
+        try {
+            Crypto c = cryptoRepository.findById(cryptoInfo.getIdCrypto()).get();
+
+            mvtCryptoService.buyCrypto(cryptoInfo.getIdUser(), c, cryptoInfo.getQuantite());
 
             bodyContent.put("success", true);
             bodyContent.put("message", "Transaction successful");
