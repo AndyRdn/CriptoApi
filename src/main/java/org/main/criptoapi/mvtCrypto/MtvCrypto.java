@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.main.criptoapi.crypto.Crypto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -34,6 +35,6 @@ public class MtvCrypto {
     private LocalDateTime daty;
 
     @Column(name = "valeur", precision = 15, scale = 2)
-    private Double valeur;
+    private BigDecimal valeur;
 
 }

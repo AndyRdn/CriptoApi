@@ -1,5 +1,6 @@
 package org.main.criptoapi.mvtCrypto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class MvtCryptoService {
         newMvt.setIdUser(idUser);
         newMvt.setAchat(0);
         newMvt.setVente(quantite);
-        newMvt.setValeur(cryptoValue);
+        newMvt.setValeur(BigDecimal.valueOf(cryptoValue));
 
         newMvt = mtvCryptoRepository.save(newMvt);
 
@@ -108,7 +109,7 @@ public class MvtCryptoService {
         newMvt.setIdUser(idUser);
         newMvt.setAchat(quantite);
         newMvt.setVente(0);
-        newMvt.setValeur(cryptoValue);
+        newMvt.setValeur(BigDecimal.valueOf(cryptoValue));
 
         newMvt = mtvCryptoRepository.save(newMvt);
 
