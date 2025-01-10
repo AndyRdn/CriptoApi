@@ -9,6 +9,8 @@ import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
 import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondRepository;
+import org.main.criptoapi.histoCrypto.HistoCrypto;
+import org.main.criptoapi.histoCrypto.HistoCryptoService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +20,14 @@ public class MvtCryptoService {
     CryptoRepository cryptoRepository;
     MtvCryptoRepository mtvCryptoRepository;
     FondRepository fondRepository;
+    HistoCryptoService histoCryptoService;
 
-    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository) {
+    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService) {
         this.jdbcTemplate = jdbcTemplate;
         this.cryptoRepository = cryptoRepository;
         this.mtvCryptoRepository = mtvCryptoRepository;
         this.fondRepository = fondRepository;
+        this.histoCryptoService = histoCryptoService;
     }
 
     public List<SoldeCryptoDTO> getPortefeuille(Integer idUser) {
@@ -75,7 +79,10 @@ public class MvtCryptoService {
             throw new IllegalArgumentException("Quantity of crypto to be sold must be inferior or equal to account balance");
         }
 
-        Double cryptoValue = 1D; // placeholder value, waiting for methods from Tsinjo
+        HistoCrypto hc = histoCryptoService.findActualValueCrypto(c.getId()).get();
+        BigDecimal decimalValue = hc.getValeur();
+        
+        Double cryptoValue = decimalValue.doubleValue(); 
 
         MtvCrypto newMvt = new MtvCrypto();
         newMvt.setDaty(LocalDateTime.now());
