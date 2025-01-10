@@ -11,6 +11,7 @@ import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondRepository;
 import org.main.criptoapi.histoCrypto.HistoCrypto;
 import org.main.criptoapi.histoCrypto.HistoCryptoService;
+import org.main.criptoapi.fonds.FondsService;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,14 @@ public class MvtCryptoService {
     MtvCryptoRepository mtvCryptoRepository;
     FondRepository fondRepository;
     HistoCryptoService histoCryptoService;
+    FondsService fondService;
 
-    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService) {
+    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService) {
         this.jdbcTemplate = jdbcTemplate;
         this.cryptoRepository = cryptoRepository;
         this.mtvCryptoRepository = mtvCryptoRepository;
         this.fondRepository = fondRepository;
+        this.fondService = fondsService;
         this.histoCryptoService = histoCryptoService;
     }
 
@@ -81,7 +84,6 @@ public class MvtCryptoService {
 
         HistoCrypto hc = histoCryptoService.findActualValueCrypto(c.getId()).get();
         BigDecimal decimalValue = hc.getValeur();
-        
         Double cryptoValue = decimalValue.doubleValue(); 
 
         MtvCrypto newMvt = new MtvCrypto();
@@ -104,8 +106,12 @@ public class MvtCryptoService {
     }
 
     public void buyCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException {
-        Double inAccount = 100000000D; // placeholder value, waiting for method from Andy
-        Double cryptoValue = 1D; // placeholder value, waiting for methods from Tsinjo
+        Double inAccount = fondService.getFond(idUser); 
+
+        HistoCrypto hc = histoCryptoService.findActualValueCrypto(c.getId()).get();
+        BigDecimal decimalValue = hc.getValeur();
+        Double cryptoValue = decimalValue.doubleValue(); 
+
         if (inAccount.compareTo(cryptoValue * quantite) < 0) {
             throw new IllegalArgumentException("Funds balance insufficient to buy " + quantite + " of " + c.getNom());
         }
