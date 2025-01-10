@@ -3,6 +3,7 @@ package org.main.criptoapi.histoCrypto;
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ public class HistoCryptoService {
         return histoCryptoRepository.findActualCryptoValue(idCrypto);
     }
 
+    @Scheduled(fixedRate = 10000)
     public void generateCryptoValues(){
         List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto();
         List<Crypto> cryptoList = cryptoRepository.findAll();
@@ -40,6 +42,8 @@ public class HistoCryptoService {
 
             histoCryptoRepository.save(histoCrypto);
         }
+
+        System.out.println("Crypto mis a jour");
     }
 
     public BigDecimal randomValue(BigDecimal bigDecimal){

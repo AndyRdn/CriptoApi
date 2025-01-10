@@ -17,7 +17,6 @@ public class DashboardController {
 
     @GetMapping("/")
     public ModelAndView generateCryptoValues() {
-        System.out.println("Tay be");
         ModelAndView mv = new ModelAndView("dashboard/dashboard");
         List<HistoCrypto> histoCryptoList = histoCryptoService.findAll();
 

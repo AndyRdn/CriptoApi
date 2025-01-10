@@ -73,6 +73,11 @@
             }
         }
     });
+
+    // Rediriger vers /dashboard toutes les 10 secondes
+    setTimeout(function() {
+        window.location.href = "/dashboard/";  // Redirige vers le contrôleur /dashboard
+    }, 10000);  // 10 secondes (10000 ms)
 </script>
 </body>
 </html>
