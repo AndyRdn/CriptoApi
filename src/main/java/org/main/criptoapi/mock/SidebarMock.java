@@ -7,24 +7,6 @@ public class SidebarMock {
     public static final Sidebar DEFAULT_SIDEBAR = new Sidebar("bx bx-chair", "Mr Meuble") // logo + nom du projet
         .withLien("/home") // Lien lorsqu'on clique sur le logo
         .addMenu(
-            // Menu: Besoin
-            new Menu("Besoins")
-                .withIcon("bx bx-briefcase-alt") // icon du menu: a voir sur: boxicons.com -> clique sur
-                // icon -> font -> copier la class
-                .addSubmenu(
-                    new Menu("Demande de besoin") // Besoin (menu) -> Demande de Besoin (sous-menu du
-                        // menu besoin)
-                        .withIcon("bx bx-mail-send")
-                        .withLien("/besoin/form")
-                )
-                .addSubmenu(
-                    new Menu("Validation Besoin") // Besoin -> Validation Besoin
-                        .withIcon("bx bx-task")
-                        .withLien("/besoin/list")
-                )
-
-        )
-        .addMenu(
                 // Menu: Besoin
                 new Menu("Profil")
                         .withIcon("bx bx-briefcase-alt") // icon du menu: a voir sur: boxicons.com -> clique sur
@@ -32,9 +14,26 @@ public class SidebarMock {
                         .addSubmenu(
                                 new Menu("Info") // Besoin (menu) -> Demande de Besoin (sous-menu du
                                         // menu besoin)
-                                        .withIcon("bx bx-mail-send")
+                                        .withIcon("bx bx-user")
                                         .withLien("/fond/donnee")
-                        )
+                        ).addSubmenu(
+                            new Menu("Portfeuille") // Besoin (menu) -> Demande de Besoin (sous-menu du
+                                    // menu besoin)
+                                    .withIcon("bx bx-cart-alt")
+                                    .withLien("/mvt-crypto/wallet")
+                    )
+
+        ).addMenu(
+            // Menu: Besoin
+            new Menu("Achats et ventes")
+                    .withIcon("bx bx-briefcase-alt") // icon du menu: a voir sur: boxicons.com -> clique sur
+                    // icon -> font -> copier la class
+                    .addSubmenu(
+                            new Menu("Tous les achats et ventes") // Besoin (menu) -> Demande de Besoin (sous-menu du
+                                    // menu besoin)
+                                    .withIcon("bx bx-spreadsheet")
+                                    .withLien("/mvt-crypto/list")
+                    )
 
         );
 
