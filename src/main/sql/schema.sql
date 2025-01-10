@@ -26,4 +26,4 @@ CREATE TABLE mtv_crypto(
     vente int,
     daty timestamp,
     valeur numeric(15,2)
-)
+);
