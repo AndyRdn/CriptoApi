@@ -3,11 +3,9 @@ package org.main.criptoapi.fonds;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
 
 @Service
 public class FondsService {
@@ -17,8 +15,11 @@ public class FondsService {
     }
     public double getFond(@RequestParam Integer id){
         double somme=0;
+        System.out.println(id);
         List<Fond> fonds= fondRepository.findByIduser(id);
         for (Fond f: fonds){
+            System.out.println(f.getDepot());
+            System.out.println(f.getRetrait());
             somme+= f.getDepot();
             somme-= f.getRetrait();
         }
@@ -26,20 +27,20 @@ public class FondsService {
         return somme;
     }
 
-    public void depot(double somme, Integer user, LocalDateTime daty){
+    public void depot(FondDTO fondDTO){
         Fond fond = new Fond();
-        fond.setIduser(user);
-        fond.setDaty(daty);
+        fond.setIduser(fondDTO.getId());
+        fond.setDaty(fondDTO.getDaty());
         fond.setRetrait(0.0);
-        fond.setDepot(somme);
+        fond.setDepot(fondDTO.getSomme());
         fondRepository.save(fond);
     }
 
-    public void retrait(double somme, Integer user, LocalDateTime daty){
+    public void retrait(FondDTO fondDTO){
         Fond fond = new Fond();
-        fond.setIduser(user);
-        fond.setDaty(daty);
-        fond.setRetrait(somme);
+        fond.setIduser(fondDTO.getId());
+        fond.setDaty(fondDTO.getDaty());
+        fond.setRetrait(fondDTO.getSomme());
         fond.setDepot(0.0);
         fondRepository.save(fond);
     }
