@@ -1,17 +1,13 @@
 package org.main.criptoapi.mvtCrypto;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+
+@Controller
 @RequestMapping("/mvt-crypto")
 public class MvtCryptoController {
     private MvtCryptoService mvtCryptoService;
@@ -23,63 +19,49 @@ public class MvtCryptoController {
     }
 
     @GetMapping("/wallet/{idUser}")
-    public ResponseEntity<?> getPortefeuille(@PathVariable Integer idUser) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(mvtCryptoService.getPortefeuille(idUser));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
+    public ModelAndView getWalletCrypto(Integer idUser) {
+        ModelAndView mv = new ModelAndView("");
+        mv.addObject("listCrypto", mvtCryptoService.getPortefeuille(idUser));
+
+        return mv;
     }
 
     @PostMapping("/sell")
-    public ResponseEntity<?> sellCrypto(@RequestBody CryptoTransactionDTO cryptoInfo) {
-        Map<String, Object> bodyContent = new HashMap<>();
+    public String sellCrypto(@RequestBody CryptoTransactionDTO cryptoInfo) {
         try {
             Crypto c = cryptoRepository.findById(cryptoInfo.getIdCrypto()).get();
 
             mvtCryptoService.sellCrypto(cryptoInfo.getIdUser(), c, cryptoInfo.getQuantite());
 
-            bodyContent.put("success", true);
-            bodyContent.put("message", "Transaction successful");
-
-            return ResponseEntity.status(HttpStatus.OK).body(bodyContent);
-        } catch (IllegalArgumentException iae) {
-            bodyContent.put("success", false);
-            bodyContent.put("message", iae.getMessage());
-            return ResponseEntity.status(HttpStatus.OK).body(bodyContent);
+            return "Transaction réussie";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return e.getMessage();
         }
     }
 
     @PostMapping("/buy")
-    public ResponseEntity<?> buyCrypto(@RequestBody CryptoTransactionDTO cryptoInfo) {
-        Map<String, Object> bodyContent = new HashMap<>();
+    public String buyCrypto(@RequestBody CryptoTransactionDTO cryptoInfo) {
         try {
             Crypto c = cryptoRepository.findById(cryptoInfo.getIdCrypto()).get();
 
             mvtCryptoService.buyCrypto(cryptoInfo.getIdUser(), c, cryptoInfo.getQuantite());
 
-            bodyContent.put("success", true);
-            bodyContent.put("message", "Transaction successful");
-
-            return ResponseEntity.status(HttpStatus.OK).body(bodyContent);
-        } catch (IllegalArgumentException iae) {
-            bodyContent.put("success", false);
-            bodyContent.put("message", iae.getMessage());
-            return ResponseEntity.status(HttpStatus.OK).body(bodyContent);
+            return "Transaction réussie";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return e.getMessage();
         }
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> listMvt(){
+    public ModelAndView listMvt(){
+        ModelAndView mv = new ModelAndView("");
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(mvtCryptoService.getList());
+            mv.addObject("listeAchatVente", mvtCryptoService.getList());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            mv.addObject("error", e.getMessage());
         }
-    }
 
+        return mv;
+    }
+    
 }

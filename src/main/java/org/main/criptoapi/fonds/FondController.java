@@ -2,9 +2,10 @@ package org.main.criptoapi.fonds;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-@RestController
+import org.springframework.web.servlet.ModelAndView;
+@Controller
 @RequestMapping("/fond")
 public class FondController {
 
@@ -15,23 +16,35 @@ public class FondController {
     }
 
     @GetMapping("/donnee")
-    public ResponseEntity<?> getFond(@RequestParam Integer id){
-
+    public ModelAndView getFond(@RequestParam Integer id) throws Exception {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(fondsService.getFond(id));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ModelAndView modelAndView=new ModelAndView();
+            modelAndView.addObject("fond",fondsService.getFond(id));
+            return modelAndView;
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 
     @PostMapping("/depot")
-    public void depot(@ModelAttribute FondDTO fondDTO){
-        fondsService.depot(fondDTO);
+    public String depot(@ModelAttribute FondDTO fondDTO) throws Exception {
+        try {
+            fondsService.depot(fondDTO);
+            return "redirect:/fond/donnee";
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
     @PostMapping("/retrait")
-    public void retrait(@ModelAttribute FondDTO fondDTO){
-        fondsService.retrait(fondDTO);
+    public String retrait(@ModelAttribute FondDTO fondDTO) throws Exception {
+
+        try {
+            fondsService.retrait(fondDTO);
+            return "redirect:/fond/donnee";
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
     }
 
 }
