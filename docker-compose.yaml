@@ -1,0 +1,15 @@
+version: '2'
+services:
+  message-server:
+    container_name: crypto-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: crypto-server:latest
+    ports:
+      - 18888:8089
+    networks:
+      - spring-cloud-network
+networks:
+  spring-cloud-network:
+    driver: bridge
