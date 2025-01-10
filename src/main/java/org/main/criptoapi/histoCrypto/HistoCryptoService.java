@@ -52,4 +52,8 @@ public class HistoCryptoService {
 
         return newValue;
     }
+
+    public List<HistoCrypto> findAll(){
+        return histoCryptoRepository.findAll();
+    }
 }
