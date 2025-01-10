@@ -39,7 +39,7 @@
                 <td><%= quantite %></td>
                 <td>
                     <form action="/mvt-crypto/sell" method="post">
-                        <input type="hidden" name="idUser" value="1" />
+                        <input type="hidden" name="idUser" value="<%= solde.getIdUser() %>" />
                         <input type="hidden" name="idCrypto" value="<%= c.getId() %>" />
 
                         <div class="input-group">
