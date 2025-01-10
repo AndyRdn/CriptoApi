@@ -15,11 +15,22 @@ public class FondController {
         this.fondsService = fondsService;
     }
 
+//    @GetMapping("/donnee")
+//    public ModelAndView getFond(@RequestParam Integer id) throws Exception {
+//        try {
+//            ModelAndView modelAndView=new ModelAndView("/profil/details");
+//            modelAndView.addObject("fond",fondsService.getFond(id));
+//            return modelAndView;
+//        }catch (Exception e) {
+//            throw new Exception(e.getMessage());
+//        }
+//    }
+
     @GetMapping("/donnee")
-    public ModelAndView getFond(@RequestParam Integer id) throws Exception {
+    public ModelAndView getFond() throws Exception {
         try {
-            ModelAndView modelAndView=new ModelAndView();
-            modelAndView.addObject("fond",fondsService.getFond(id));
+            ModelAndView modelAndView=new ModelAndView("/profil/details");
+//            modelAndView.addObject("fond",fondsService.getFond(id));
             return modelAndView;
         }catch (Exception e) {
             throw new Exception(e.getMessage());
