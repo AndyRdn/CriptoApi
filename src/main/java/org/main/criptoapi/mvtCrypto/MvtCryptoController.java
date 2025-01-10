@@ -73,4 +73,13 @@ public class MvtCryptoController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<?> listMvt(){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mvtCryptoService.getList());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 }

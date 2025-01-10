@@ -1,5 +1,7 @@
 package org.main.criptoapi.fonds;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,8 +15,13 @@ public class FondController {
     }
 
     @GetMapping("/donnee")
-    public double getFond(@RequestParam Integer id){
-        return fondsService.getFond(id);
+    public ResponseEntity<?> getFond(@RequestParam Integer id){
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(fondsService.getFond(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @PostMapping("/depot")
