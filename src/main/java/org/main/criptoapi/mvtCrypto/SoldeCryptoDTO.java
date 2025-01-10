@@ -17,13 +17,16 @@ public class SoldeCryptoDTO {
     
     Double quantite;
 
+    Double valeur;
+
     public SoldeCryptoDTO() {
     }
 
-    public SoldeCryptoDTO(Integer idUser, Crypto crypto, Double quantite) {
+    public SoldeCryptoDTO(Integer idUser, Crypto crypto, Double quantite, Double valeur) {
         this.idUser = idUser;
         this.crypto = crypto;
         this.quantite = quantite;
+        this.valeur = valeur;
     }
 
 }

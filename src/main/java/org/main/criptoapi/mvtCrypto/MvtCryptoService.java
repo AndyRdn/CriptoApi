@@ -48,10 +48,16 @@ public class MvtCryptoService {
                         Crypto c = cryptoRepository.findById(cryptoId).get();
                         sc.setCrypto(c);
 
+                        double valeur = histoCryptoService.findActualValueCrypto(c.getId()).get().getValeur().doubleValue();
+                        sc.setValeur(valeur);
+
                         double q = rs.getInt("quantite");
                         sc.setQuantite(q);
 
-                        soldes.add(sc);
+                        if(q >= 1) {
+                            soldes.add(sc);
+                        }
+
                     }
 
                     return soldes;
