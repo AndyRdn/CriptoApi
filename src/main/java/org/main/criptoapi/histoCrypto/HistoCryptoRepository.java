@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,5 +13,10 @@ public interface HistoCryptoRepository extends JpaRepository<HistoCrypto, Intege
 
     @Query("select hc from HistoCrypto hc where hc.idCrypto.id= :idCrypto order by hc.id desc")
     Optional<HistoCrypto> findActualCryptoValue(@Param("idCrypto") Integer idCrypto);
+
+    @Query("SELECT hc.idCrypto, MAX(hc.daty), hc.valeur " +
+            "FROM HistoCrypto hc " +
+            "GROUP BY hc.idCrypto")
+    List<HistoCrypto> findLastValueForEachCrypto();
 
 }
