@@ -1,5 +1,7 @@
 package org.main.criptoapi.histoCrypto;
 
+import org.main.criptoapi.crypto.Crypto;
+import org.main.criptoapi.crypto.CryptoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +18,17 @@ public class HistoCryptoService {
     @Autowired
     private HistoCryptoRepository histoCryptoRepository;
 
+    @Autowired
+    private CryptoRepository cryptoRepository;
+
     public Optional<HistoCrypto> findActualValueCrypto(Integer idCrypto){
         return histoCryptoRepository.findActualCryptoValue(idCrypto);
     }
 
     public void generateCryptoValues(){
         List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto();
-        for (int i=0; i<histoCryptoList.size(); i++){
+        List<Crypto> cryptoList = cryptoRepository.findAll();
+        for (int i=0; i<cryptoList.size(); i++){
             HistoCrypto histoCrypto = new HistoCrypto();
             histoCrypto.setIdCrypto(histoCryptoList.get(i).getIdCrypto());
 
