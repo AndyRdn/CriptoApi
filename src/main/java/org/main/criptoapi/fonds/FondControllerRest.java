@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-
-@RequestMapping("/fond")
+@RestController
+@RequestMapping("/api/fond")
 public class FondControllerRest {
 
     private final FondsService fondsService;
