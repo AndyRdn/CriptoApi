@@ -30,12 +30,12 @@ public class FondController {
 //        }
 //    }
 
-    @GetMapping("/donnee")
-    public ModelAndView getFond() throws Exception {
+    @GetMapping("/donnee/{id}")
+    public ModelAndView getFond(@PathVariable int id) throws Exception {
         try {
             ModelAndView mv = new ModelAndView("layout");
             mv.addObject("page","profil/details");
-//            modelAndView.addObject("fond",fondsService.getFond(id));
+            mv.addObject("fond",fondsService.getFond(id));
             return mv;
         }catch (Exception e) {
             throw new Exception(e.getMessage());

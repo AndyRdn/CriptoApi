@@ -1,9 +1,14 @@
+<%@ page import="org.main.criptoapi.fonds.Fond" %>
 <script src="../../assets/js/config.js"></script><link rel="stylesheet" type="text/css" href="../../assets/vendor/css/rtl/core.css" class="template-customizer-core-css"><link rel="stylesheet" type="text/css" href="../../assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css"><link rel="stylesheet" type="text/css" href="../../assets/vendor/css/rtl/core.css" class="template-customizer-core-css"><link rel="stylesheet" type="text/css" href="../../assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css">
 
+<%
+    double fond= (double) request.getAttribute("fond");
+
+%>
 <div class="container-xxl flex-grow-1 container-p-y">
 
     <div class="row">
-        <div class="col-xxl-8 mb-6 order-0">
+        <div class="col-xxl-12 mb-6 order-0">
             <div class="card">
                 <div class="d-flex align-items-start row">
                     <div class="col-sm-7">
@@ -25,8 +30,6 @@
                             <h6 class="card-title text-primary mb-3">Email</h6>
                             <p class="mb-6">JhonDoe@gmail.com</p>
 
-
-                            <a href="javascript:;" class="btn btn-sm btn-label-primary">View Badges</a>
                         </div>
                     </div>
                     <div class="col-sm-5 text-center text-sm-left">
@@ -37,7 +40,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-4 col-lg-12 col-md-4 order-1">
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-lg-12 col-md-6">
             <div class="row">
                 <div class="col-lg-6 col-md-12 col-6 mb-6">
                     <div class="card h-100">
@@ -48,11 +53,12 @@
                                 </div>
                             </div>
                             <p class="mb-1">Fond</p>
-                            <h4 class="card-title mb-3">$4,679</h4>
+                            <h4 class="card-title mb-3"><%=fond%></h4>
                             <small class="text-success fw-medium"><i class="bx bx-up-arrow-alt"></i> +28.42%</small>
                         </div>
                     </div>
-
+                </div>
+                <div class="col-lg-6 col-md-12 col-6 mb-6">
                     <div class="card h-100">
                         <div class="card-body">
                             <div class="card-title d-flex align-items-start justify-content-between mb-4">
