@@ -26,9 +26,26 @@ public class SidebarMock {
                         .addSubmenu(
                                 new Menu("Info") // Besoin (menu) -> Demande de Besoin (sous-menu du
                                         // menu besoin)
-                                        .withIcon("bx bx-mail-send")
+                                        .withIcon("bx bx-user")
                                         .withLien("/fond/donnee")
-                        )
+                        ).addSubmenu(
+                            new Menu("Portfeuille") // Besoin (menu) -> Demande de Besoin (sous-menu du
+                                    // menu besoin)
+                                    .withIcon("bx bx-cart-alt")
+                                    .withLien("/mvt-crypto/wallet")
+                    )
+
+        ).addMenu(
+            // Menu: Besoin
+            new Menu("Achats et ventes")
+                    .withIcon("bx bx-briefcase-alt") // icon du menu: a voir sur: boxicons.com -> clique sur
+                    // icon -> font -> copier la class
+                    .addSubmenu(
+                            new Menu("Tous les achats et ventes") // Besoin (menu) -> Demande de Besoin (sous-menu du
+                                    // menu besoin)
+                                    .withIcon("bx bx-spreadsheet")
+                                    .withLien("/mvt-crypto/list")
+                    )
 
         );
 
