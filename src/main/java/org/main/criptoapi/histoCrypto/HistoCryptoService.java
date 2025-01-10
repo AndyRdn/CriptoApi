@@ -15,4 +15,6 @@ public class HistoCryptoService {
         return histoCryptoRepository.findActualCryptoValue(idCrypto);
     }
 
+    public List<HistoCrypto> generate
+
 }
