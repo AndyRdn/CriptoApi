@@ -134,4 +134,8 @@ public class MvtCryptoService {
 
         f = fondRepository.save(f);
     }
+
+    public List<MtvCrypto> getList(){
+        return mtvCryptoRepository.findAll();
+    }
 }
