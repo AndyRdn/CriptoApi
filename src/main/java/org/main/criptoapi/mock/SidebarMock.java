@@ -21,5 +21,22 @@ public class SidebarMock {
                     new Menu("Validation Besoin") // Besoin -> Validation Besoin
                         .withIcon("bx bx-task")
                         .withLien("/besoin/list")
-                ));
+                )
+
+        )
+        .addMenu(
+                // Menu: Besoin
+                new Menu("Profil")
+                        .withIcon("bx bx-briefcase-alt") // icon du menu: a voir sur: boxicons.com -> clique sur
+                        // icon -> font -> copier la class
+                        .addSubmenu(
+                                new Menu("Info") // Besoin (menu) -> Demande de Besoin (sous-menu du
+                                        // menu besoin)
+                                        .withIcon("bx bx-mail-send")
+                                        .withLien("/fond/donnee")
+                        )
+
+        );
+
+
 }
