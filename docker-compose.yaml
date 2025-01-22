@@ -1,15 +1,23 @@
-version: '2'
 services:
-  message-server:
+  postgres-java:
+    image: postgres:13-alpine
+    container_name: postgres-java
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: crypto_api
+    volumes:
+      - ./src/main/resources/sql/crypto_api.sql:/docker-entrypoint-initdb.d/crypto_api.sql
+    ports:
+      - "5433:5432"
+  crypto-server:
     container_name: crypto-server
     build:
       context: .
       dockerfile: Dockerfile
     image: crypto-server:latest
     ports:
-      - 18888:8089
-    networks:
-      - spring-cloud-network
-networks:
-  spring-cloud-network:
-    driver: bridge
+      - 8089:8089
+    depends_on:
+      - postgres-java
