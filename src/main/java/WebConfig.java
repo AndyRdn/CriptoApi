@@ -17,4 +17,14 @@ public class WebConfig implements WebMvcConfigurer {
         return resolver;
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**") // Apply to all endpoints
+                .allowedOrigins("http://localhost:5173") // Replace with allowed origins
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allowed HTTP methods
+                .allowedHeaders("*") // Allowed headers
+                .allowCredentials(true) // Allow cookies
+                .maxAge(3600); // Max age for preflight requests
+    }
+
 }
