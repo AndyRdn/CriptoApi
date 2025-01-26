@@ -24,7 +24,7 @@ public class MvtCryptoRestController {
     @GetMapping("/wallet/{idUser}")
     public ResponseEntity<?> getPortefeuille(@PathVariable Integer idUser) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(mvtCryptoService.getPortefeuille(idUser+1));
+            return ResponseEntity.status(HttpStatus.OK).body(mvtCryptoService.getPortefeuille(idUser));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
