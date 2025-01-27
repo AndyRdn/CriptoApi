@@ -18,7 +18,7 @@ public class MtvCrypto {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_crypto")
     private Crypto idCrypto;
 
