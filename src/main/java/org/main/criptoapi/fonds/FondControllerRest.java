@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/fond")
 public class FondControllerRest {
 
@@ -16,10 +17,11 @@ public class FondControllerRest {
         this.fondsService = fondsService;
     }
 
-    @GetMapping("/donnee")
-    public ResponseEntity<?> getFond(@RequestParam Integer id){
+    @GetMapping("/donnee/{id}")
+    public ResponseEntity<?> getFond(@PathVariable Integer id){
 
         try {
+            System.out.println("Miditra beeee");
             return ResponseEntity.status(HttpStatus.OK).body(fondsService.getFond(id));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
