@@ -8,10 +8,9 @@ import org.main.criptoapi.crypto.CryptoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/mvt-crypto")
 public class MvtCryptoRestController {
     private MvtCryptoService mvtCryptoService;
