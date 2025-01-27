@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/fond")
+@RequestMapping("/api/fond")
 public class FondControllerRest {
 
     private final FondsService fondsService;

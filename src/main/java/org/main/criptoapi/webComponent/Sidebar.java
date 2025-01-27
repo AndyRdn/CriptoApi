@@ -51,7 +51,7 @@ public class Sidebar {
             "<i class=\" " + this.getLogo() + "\" style=\"font-weight: bold; font-size:28px;\"></i>"+
             "\n" +
             "</span>\n" +
-            "      <span class=\"app-brand-text demo menu-text fw-bold ms-2\">" + titre + "</span>\n" +
+            "      <span class=\"app-brand-text demo menu-text fw-bold ms-2\"> CriptoApi </span>\n" +
             "    </a>\n" +
             "\n" +
             "    <a href=\"javascript:void(0);\" class=\"layout-menu-toggle menu-link text-large ms-auto\">\n" +
