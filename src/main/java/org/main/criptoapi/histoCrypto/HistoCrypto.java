@@ -19,7 +19,7 @@ public class HistoCrypto {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_crypto")
     private Crypto idCrypto;
 
