@@ -11,7 +11,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "histoCrypto")
+@Table(name = "histo_crypto")
 public class HistoCrypto {
 
     @Id
