@@ -26,10 +26,19 @@ public class HistoCryptoService {
         return histoCryptoRepository.findActualCryptoValue(idCrypto);
     }
 
+    public List<HistoCrypto> findLastValueForEachCrypto(){
+        List<Crypto> cryptoList = cryptoRepository.findAll();
+        return histoCryptoRepository.findLastValueForEachCrypto(cryptoList.size());
+    }
+
+    public List<HistoCrypto> findLastValueForEachCrypto(int nb){
+        return histoCryptoRepository.findLastValueForEachCrypto(nb);
+    }
+
     @Scheduled(fixedRate = 10000)
     public void generateCryptoValues(){
-        List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto();
         List<Crypto> cryptoList = cryptoRepository.findAll();
+        List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto(cryptoList.size());
         for (int i=0; i<cryptoList.size(); i++){
             HistoCrypto histoCrypto = new HistoCrypto();
             histoCrypto.setIdCrypto(histoCryptoList.get(i).getIdCrypto());
