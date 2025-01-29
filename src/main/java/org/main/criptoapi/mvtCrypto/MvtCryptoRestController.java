@@ -1,6 +1,9 @@
 package org.main.criptoapi.mvtCrypto;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.main.criptoapi.crypto.Crypto;
@@ -81,4 +84,18 @@ public class MvtCryptoRestController {
         }
     }
 
+    @PostMapping("/search")
+    public ResponseEntity<?> filtreAchatVente(@RequestBody FiltreAchatVenteDTO filtreAchatVenteDTO){
+        try{
+            String dateHeure = filtreAchatVenteDTO.getDateHeure();
+
+            LocalDateTime dateTime = LocalDateTime.parse(dateHeure);
+
+            ArrayList<FiltreAchatVente> filtreAchatVentes = mvtCryptoService.findFiltreAchatVenteByDate(dateTime);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(filtreAchatVentes);
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }

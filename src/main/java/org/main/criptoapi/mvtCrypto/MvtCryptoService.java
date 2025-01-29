@@ -144,4 +144,8 @@ public class MvtCryptoService {
     public List<MtvCrypto> getList(){
         return mtvCryptoRepository.findAll();
     }
+
+    public ArrayList<FiltreAchatVente> findFiltreAchatVenteByDate(LocalDateTime dateTime){
+        return mtvCryptoRepository.findFiltreAchatVenteByDate(dateTime);
+    }
 }
