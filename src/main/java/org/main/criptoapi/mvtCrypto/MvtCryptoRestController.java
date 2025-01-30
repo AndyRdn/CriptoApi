@@ -95,7 +95,7 @@ public class MvtCryptoRestController {
             LocalDateTime dateTime = LocalDateTime.parse(dateHeure);
 
             ArrayList<FiltreAchatVente> filtreAchatVentes = mvtCryptoService.findFiltreAchatVenteByDate(dateTime);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(filtreAchatVentes);
+            return ResponseEntity.status(HttpStatus.OK).body(filtreAchatVentes);
 
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

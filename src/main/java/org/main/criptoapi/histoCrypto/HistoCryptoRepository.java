@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,5 +19,6 @@ public interface HistoCryptoRepository extends JpaRepository<HistoCrypto, Intege
 
     @Query(value = "select hc from HistoCrypto hc order by hc.id desc Limit :limit", nativeQuery = false)
     List<HistoCrypto> findLastValueForEachCrypto(@Param("limit") Integer size);
+
 
 }
