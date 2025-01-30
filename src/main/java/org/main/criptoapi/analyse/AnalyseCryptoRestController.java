@@ -50,9 +50,9 @@ public class AnalyseCryptoRestController {
             System.out.println("maxDate: " + maxDate);
             System.out.println("cryptoIds: " + cryptoIds);
 
-            analyseCryptoService.traiterResultats(minDate, maxDate);
+            List<AnalyseResponse> analyseResponses = analyseCryptoService.traiterResultats(analyseRequest);
 
-            return ResponseEntity.status(HttpStatus.OK).body("{ \"resultat\":\"ok\" }");
+            return ResponseEntity.status(HttpStatus.OK).body(analyseResponses);
 
         } catch (Exception e) {
             e.printStackTrace();
