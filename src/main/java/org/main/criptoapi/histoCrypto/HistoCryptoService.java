@@ -69,4 +69,8 @@ public class HistoCryptoService {
     public List<HistoCrypto> findAll(){
         return histoCryptoRepository.findAll();
     }
+
+    public List<HistoCrypto> findLastValue(Integer id) {
+        return histoCryptoRepository.findLastValue(id);
+    }
 }
