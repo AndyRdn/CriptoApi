@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.main.criptoapi.commision.CommissionService;
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
 import org.main.criptoapi.fonds.Fond;
@@ -23,6 +24,7 @@ public class MvtCryptoService {
     FondRepository fondRepository;
     HistoCryptoService histoCryptoService;
     FondsService fondService;
+    CommissionService commissionService;
 
     public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService) {
         this.jdbcTemplate = jdbcTemplate;
@@ -91,7 +93,7 @@ public class MvtCryptoService {
         HistoCrypto hc = histoCryptoService.findActualValueCrypto(c.getId()).get();
         BigDecimal decimalValue = hc.getValeur();
         Double cryptoValue = decimalValue.doubleValue(); 
-
+        commissionService.generateCommisionVente(c,cryptoValue*quantite);
         MtvCrypto newMvt = new MtvCrypto();
         newMvt.setDaty(LocalDateTime.now());
         newMvt.setIdCrypto(c);
@@ -121,7 +123,7 @@ public class MvtCryptoService {
         if (inAccount.compareTo(cryptoValue * quantite) < 0) {
             throw new IllegalArgumentException("Funds balance insufficient to buy " + quantite + " of " + c.getNom());
         }
-
+        commissionService.generateCommissionAchat(c,cryptoValue*quantite);
         MtvCrypto newMvt = new MtvCrypto();
         newMvt.setDaty(LocalDateTime.now());
         newMvt.setIdCrypto(c);
