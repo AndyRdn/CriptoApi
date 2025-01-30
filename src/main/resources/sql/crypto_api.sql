@@ -40,6 +40,22 @@ create table histo_Crypto(
                              valeur decimal(15,2)
 );
 
+create table commission
+(
+    id serial primary key,
+    id_crypto integer references crypto,
+    daty      date,
+    montant   double precision
+);
+
+create table config
+(
+    id    serial primary key,
+    key   varchar(255),
+    value varchar(255)
+);
+
+
 insert into histo_Crypto values (default, 1, '2024-1-1 10:00:00', 2200.40);
 insert into histo_Crypto values (default, 2, '2024-1-1 10:00:00', 5000.99);
 insert into histo_Crypto values (default, 3, '2024-1-1 10:00:00', 1500.50);
@@ -106,3 +122,7 @@ VALUES
     (3, 12000.00, 0.00, '2024-01-15 09:45:00'),
     (4, 0.00, 8000.00, '2024-02-01 14:15:00'),
     (5, 7000.00, 0.00, '2024-03-02 10:30:00');
+
+insert into config values
+    (default,'comsAchat', '20'),
+    (default,'comsVente', '25');
