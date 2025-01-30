@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -35,7 +38,7 @@ public class HistoCryptoService {
         return histoCryptoRepository.findLastValueForEachCrypto(nb);
     }
 
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 10000)
     public void generateCryptoValues(){
         List<Crypto> cryptoList = cryptoRepository.findAll();
         List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto(cryptoList.size());
@@ -69,4 +72,5 @@ public class HistoCryptoService {
     public List<HistoCrypto> findAll(){
         return histoCryptoRepository.findAll();
     }
+
 }
