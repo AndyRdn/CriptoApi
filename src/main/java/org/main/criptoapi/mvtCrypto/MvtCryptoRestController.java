@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.main.criptoapi.commision.CommissionService;
+import org.main.criptoapi.config.ConfigService;
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
 import org.springframework.http.HttpStatus;
@@ -19,9 +21,11 @@ public class MvtCryptoRestController {
     private MvtCryptoService mvtCryptoService;
     private CryptoRepository cryptoRepository;
 
+
     public MvtCryptoRestController(MvtCryptoService mvtCryptoService, CryptoRepository cryptoRepository) {
         this.mvtCryptoService = mvtCryptoService;
         this.cryptoRepository = cryptoRepository;
+
     }
 
     @GetMapping("/wallet/{idUser}")
@@ -40,7 +44,6 @@ public class MvtCryptoRestController {
             Crypto c = cryptoRepository.findById(cryptoInfo.getIdCrypto()).get();
 
             mvtCryptoService.sellCrypto(cryptoInfo.getIdUser(), c, cryptoInfo.getQuantite());
-
             bodyContent.put("success", true);
             bodyContent.put("message", "Transaction successful");
 

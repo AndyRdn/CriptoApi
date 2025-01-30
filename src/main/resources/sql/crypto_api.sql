@@ -28,6 +28,19 @@ CREATE TABLE mtv_crypto(
     valeur numeric(15,2)
 );
 
+CREATE TABLE Config(
+    id serial primary key ,
+    key varchar(255),
+    value varchar(255)
+);
+
+CREATE TABLE commission(
+    id serial primary key ,
+    id_crypto int references Crypto(id),
+    daty date,
+    montant double precision
+);
+
 CREATE OR REPLACE VIEW v_solde_cryptos AS
 (
     SELECT id_user, id_crypto, SUM(achat) - SUM(vente) AS quantite FROM mtv_crypto GROUP BY id_user, id_crypto ORDER BY id_user
@@ -126,3 +139,4 @@ VALUES
 insert into config values
     (default,'comsAchat', '20'),
     (default,'comsVente', '25');
+
