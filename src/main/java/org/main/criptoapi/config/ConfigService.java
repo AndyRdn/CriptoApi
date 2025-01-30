@@ -10,7 +10,10 @@ public class ConfigService {
         this.configRepository = configRepository;
     }
 
-    public String getByKey(String key){
+    public String getValueByKey(String key){
         return configRepository.findByKey(key).get().getKey();
+    }
+    public Config getByKey(String key){
+        return configRepository.findByKey(key).get();
     }
 }
