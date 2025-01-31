@@ -22,5 +22,4 @@ public interface HistoCryptoRepository extends JpaRepository<HistoCrypto, Intege
 
     @Query(value = "select hc from HistoCrypto hc where hc.idCrypto.id = :idCrypto order by hc.daty desc limit 10")
     List<HistoCrypto> findLastValue(@Param("idCrypto") Integer id);
-
 }

@@ -9,16 +9,18 @@ import java.math.BigDecimal;
 @Setter
 public class AnalyseResult {
     private Integer id;
+    private String nom;
     private double quartile;
     private double min;
     private double max;
+    private double moyenne;
     private double ecartType;
 
-    public AnalyseResult(Integer id, BigDecimal quartile, BigDecimal min, BigDecimal max, BigDecimal ecart){
+    public AnalyseResult(Integer id, String nom, BigDecimal min, BigDecimal max, BigDecimal avg){
         this.id = id;
-        this.quartile = quartile.doubleValue();
+        this.nom = nom;
         this.min = min.doubleValue();
         this.max = max.doubleValue();
-        this.ecartType = ecart.doubleValue();
+        this.moyenne = avg.doubleValue();
     }
 }
