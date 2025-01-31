@@ -30,7 +30,7 @@ public class CommissionService {
     public void generateCommisionVente(Crypto c, double prix){
         double comsVente=Double.parseDouble(configService.getValueByKey("comsVente"));
         Commission commission=new Commission();
-        commission.setDaty(LocalDateTime.now());
+        commission.setDaty(LocalDateTime    .now());
         commission.setIdCrypto(c);
         commission.setMontant((prix*comsVente)/100);
     }
