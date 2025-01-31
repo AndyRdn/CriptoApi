@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -20,8 +21,8 @@ public interface CommissionRepository extends JpaRepository<Commission, Integer>
             "GROUP BY c.idCrypto.id, c.idCrypto.nom")
     List<CommissionResult> findSumMontantByCryptoIdsAndDateRange(
             @Param("cryptoIds") List<Integer> cryptoIds,
-            @Param("minDate") String minDate,
-            @Param("maxDate") String maxDate
+            @Param("minDate") LocalDate minDate,
+            @Param("maxDate") LocalDate maxDate
     );
     @Query("SELECT new org.main.criptoapi.commision.CommissionResult(c.idCrypto.id, c.idCrypto.nom, AVG(c.montant)) " +
             "FROM Commission c " +
@@ -32,7 +33,7 @@ public interface CommissionRepository extends JpaRepository<Commission, Integer>
             "GROUP BY c.idCrypto.id, c.idCrypto.nom")
     List<CommissionResult> findAvgMontantByCryptoIdsAndDateRange(
             @Param("cryptoIds") List<Integer> cryptoIds,
-            @Param("minDate") String minDate,
-            @Param("maxDate") String maxDate
+            @Param("minDate") LocalDate minDate,
+            @Param("maxDate") LocalDate maxDate
     );
 }

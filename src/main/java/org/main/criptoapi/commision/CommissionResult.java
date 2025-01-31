@@ -4,7 +4,7 @@ public class CommissionResult {
     int id;
     String nom;
 
-    double montant;
+    double valeur;
 
     public int getId() {
         return id;
@@ -22,17 +22,17 @@ public class CommissionResult {
         this.nom = nom;
     }
 
-    public double getMontant() {
-        return montant;
+    public double getValeur() {
+        return valeur;
     }
 
-    public void setMontant(double montant) {
-        this.montant = montant;
+    public void setValeur(double montant) {
+        this.valeur = montant;
     }
 
     public CommissionResult(int id, String nom, double montant) {
         this.id = id;
         this.nom = nom;
-        this.montant = montant;
+        this.valeur = montant;
     }
 }

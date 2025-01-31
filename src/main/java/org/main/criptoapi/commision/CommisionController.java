@@ -17,8 +17,8 @@ public class CommisionController {
         this.commissionService = commissionService;
     }
 
-    @GetMapping("/Analyse")
-    public ResponseEntity<?> listAll(@ModelAttribute AnalyseComsDTO analyseComsDTO){
+    @PostMapping("/Analyse")
+    public ResponseEntity<?> listAll(@RequestBody AnalyseComsDTO analyseComsDTO){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(commissionService.analyseComs(analyseComsDTO));
         } catch (Exception e) {
@@ -26,7 +26,7 @@ public class CommisionController {
         }
     }
 
-    @PostMapping("configVente")
+    @PostMapping("/configVente")
     public ResponseEntity<?> configV(@RequestParam int valeur){
         try {
             commissionService.changeConfigV(valeur);
@@ -36,7 +36,7 @@ public class CommisionController {
         }
     }
 
-    @PostMapping("configAchat")
+    @PostMapping("/configAchat")
     public ResponseEntity<?> configA(@RequestParam int valeur){
         try {
             commissionService.changeConfigA(valeur);

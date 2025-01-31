@@ -8,6 +8,7 @@ import org.main.criptoapi.mvtCrypto.MvtCryptoService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,20 +39,18 @@ public class CommissionService {
     }
 
     public List<CommissionResult> analyseComs(AnalyseComsDTO analyseComsDTO){
-        if (analyseComsDTO.getTypeAnalyse()== null) analyseComsDTO.setTypeAnalyse("");
+        System.out.println(analyseComsDTO.getTypeAnalyse());
+        LocalDate minDate = (analyseComsDTO.getMinDate() != null) ? LocalDate.parse(analyseComsDTO.getMinDate()) : null;
+        LocalDate maxDate = (analyseComsDTO.getMaxDate() != null) ? LocalDate.parse(analyseComsDTO.getMaxDate()) : null;
         if (analyseComsDTO.getTypeAnalyse().equals("avg")){
-            return commissionRepository.findAvgMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),analyseComsDTO.getMinDate(),analyseComsDTO.getMaxDate());
+            for (int i: analyseComsDTO.getCryptoIds()) System.out.println(i);
+            return commissionRepository.findAvgMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),minDate,maxDate);
         }else if (analyseComsDTO.getTypeAnalyse().equals("sum")){
-            return commissionRepository.findSumMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),analyseComsDTO.getMinDate(),analyseComsDTO.getMaxDate());
-
+            return commissionRepository.findSumMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),minDate,maxDate);
         }else {
-            System.out.println("ato ve alnsnlkalwkdnnwalkda");
-            System.out.println("ato ve alnsnlkalwkdnnwalkda");
-            System.out.println("ato ve alnsnlkalwkdnnwalkda");
-            System.out.println("ato ve alnsnlkalwkdnnwalkda");
             analyseComsDTO.setCryptoIds(cryptoRepository.findAllCryptoIds());
             for (int i: analyseComsDTO.getCryptoIds()) System.out.println(i);
-            return commissionRepository.findSumMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),analyseComsDTO.getMinDate(),analyseComsDTO.getMaxDate());
+            return commissionRepository.findSumMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),minDate,maxDate);
         }
     }
 

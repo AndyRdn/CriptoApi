@@ -3,10 +3,10 @@ package org.main.criptoapi.commision;
 import java.util.List;
 
 public class AnalyseComsDTO {
-    private String typeAnalyse;
+    private List<Integer> cryptoIds;
     private String minDate;
     private String maxDate;
-    private List<Integer> cryptoIds;
+    private String typeAnalyse;
 
     public String getTypeAnalyse() { return typeAnalyse; }
     public void setTypeAnalyse(String typeAnalyse) { this.typeAnalyse = typeAnalyse; }
