@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.main.criptoapi.crypto.Crypto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class Commission {
     private Crypto idCrypto;
 
     @Column(name = "daty")
-    private LocalDate daty;
+    private LocalDateTime daty;
 
     @Column(name = "montant")
     private Double montant;

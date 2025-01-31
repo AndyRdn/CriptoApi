@@ -21,8 +21,8 @@ public interface CommissionRepository extends JpaRepository<Commission, Integer>
             "GROUP BY c.idCrypto.id, c.idCrypto.nom")
     List<CommissionResult> findSumMontantByCryptoIdsAndDateRange(
             @Param("cryptoIds") List<Integer> cryptoIds,
-            @Param("minDate") LocalDate minDate,
-            @Param("maxDate") LocalDate maxDate
+            @Param("minDate") LocalDateTime minDate,
+            @Param("maxDate") LocalDateTime maxDate
     );
     @Query("SELECT new org.main.criptoapi.commision.CommissionResult(c.idCrypto.id, c.idCrypto.nom, AVG(c.montant)) " +
             "FROM Commission c " +
@@ -33,7 +33,7 @@ public interface CommissionRepository extends JpaRepository<Commission, Integer>
             "GROUP BY c.idCrypto.id, c.idCrypto.nom")
     List<CommissionResult> findAvgMontantByCryptoIdsAndDateRange(
             @Param("cryptoIds") List<Integer> cryptoIds,
-            @Param("minDate") LocalDate minDate,
-            @Param("maxDate") LocalDate maxDate
+            @Param("minDate") LocalDateTime minDate,
+            @Param("maxDate") LocalDateTime maxDate
     );
 }

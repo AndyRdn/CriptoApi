@@ -37,7 +37,7 @@ CREATE TABLE Config(
 CREATE TABLE commission(
     id serial primary key ,
     id_crypto int references Crypto(id),
-    daty date,
+    daty timestamp,
     montant double precision
 );
 
