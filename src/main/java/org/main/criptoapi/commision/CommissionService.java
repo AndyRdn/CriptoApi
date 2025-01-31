@@ -38,13 +38,19 @@ public class CommissionService {
     }
 
     public List<CommissionResult> analyseComs(AnalyseComsDTO analyseComsDTO){
+        if (analyseComsDTO.getTypeAnalyse()== null) analyseComsDTO.setTypeAnalyse("");
         if (analyseComsDTO.getTypeAnalyse().equals("avg")){
             return commissionRepository.findAvgMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),analyseComsDTO.getMinDate(),analyseComsDTO.getMaxDate());
         }else if (analyseComsDTO.getTypeAnalyse().equals("sum")){
             return commissionRepository.findSumMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),analyseComsDTO.getMinDate(),analyseComsDTO.getMaxDate());
 
         }else {
+            System.out.println("ato ve alnsnlkalwkdnnwalkda");
+            System.out.println("ato ve alnsnlkalwkdnnwalkda");
+            System.out.println("ato ve alnsnlkalwkdnnwalkda");
+            System.out.println("ato ve alnsnlkalwkdnnwalkda");
             analyseComsDTO.setCryptoIds(cryptoRepository.findAllCryptoIds());
+            for (int i: analyseComsDTO.getCryptoIds()) System.out.println(i);
             return commissionRepository.findSumMontantByCryptoIdsAndDateRange(analyseComsDTO.getCryptoIds(),analyseComsDTO.getMinDate(),analyseComsDTO.getMaxDate());
         }
     }

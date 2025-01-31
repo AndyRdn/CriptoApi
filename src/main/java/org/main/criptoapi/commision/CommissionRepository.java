@@ -11,23 +11,25 @@ import java.util.List;
 @Repository
 public interface CommissionRepository extends JpaRepository<Commission, Integer> {
 
-    @Query("SELECT c.idCrypto.id, c.idCrypto.nom, SUM(c.montant) " +
+    @Query("SELECT new org.main.criptoapi.commision.CommissionResult(c.idCrypto.id, c.idCrypto.nom, SUM(c.montant)) " +
             "FROM Commission c " +
-            "WHERE c.idCrypto.id IN :cryptoIds " +
-            "AND coalesce(:minDate, null ) is NULL or c.daty >= :minDate " +
-            "AND coalesce(:maxDate, null ) is NULL or c.daty <= :maxDate " +
-            "GROUP BY c.idCrypto.id")
+            "WHERE (c.idCrypto.id IN :cryptoIds " +
+            "AND (coalesce(:minDate, null) IS NULL OR c.daty >= :minDate) " +
+            "AND (coalesce(:maxDate, null) IS NULL OR c.daty <= :maxDate)) " +
+            "OR c.idCrypto.id IN :cryptoIds " +
+            "GROUP BY c.idCrypto.id, c.idCrypto.nom")
     List<CommissionResult> findSumMontantByCryptoIdsAndDateRange(
             @Param("cryptoIds") List<Integer> cryptoIds,
             @Param("minDate") String minDate,
             @Param("maxDate") String maxDate
     );
-    @Query("SELECT c.idCrypto.id, c.idCrypto.nom, SUM(c.montant) " +
+    @Query("SELECT new org.main.criptoapi.commision.CommissionResult(c.idCrypto.id, c.idCrypto.nom, AVG(c.montant)) " +
             "FROM Commission c " +
-            "WHERE c.idCrypto.id IN :cryptoIds " +
-            "AND coalesce(:minDate, null ) is NULL or c.daty >= :minDate " +
-            "AND coalesce(:maxDate, null ) is NULL or c.daty <= :maxDate " +
-            "GROUP BY c.idCrypto.id")
+            "WHERE (c.idCrypto.id IN :cryptoIds " +
+            "AND (coalesce(:minDate, null) IS NULL OR c.daty >= :minDate) " +
+            "AND (coalesce(:maxDate, null) IS NULL OR c.daty <= :maxDate)) " +
+            "OR c.idCrypto.id IN :cryptoIds " +
+            "GROUP BY c.idCrypto.id, c.idCrypto.nom")
     List<CommissionResult> findAvgMontantByCryptoIdsAndDateRange(
             @Param("cryptoIds") List<Integer> cryptoIds,
             @Param("minDate") String minDate,
