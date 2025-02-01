@@ -11,7 +11,7 @@ public class ConfigService {
     }
 
     public String getValueByKey(String key){
-        return configRepository.findByKey(key).get().getKey();
+        return configRepository.findByKey(key).get().getValue();
     }
     public Config getByKey(String key){
         return configRepository.findByKey(key).get();

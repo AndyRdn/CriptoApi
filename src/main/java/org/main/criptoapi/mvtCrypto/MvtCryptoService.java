@@ -26,13 +26,14 @@ public class MvtCryptoService {
     FondsService fondService;
     CommissionService commissionService;
 
-    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService) {
+    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService) {
         this.jdbcTemplate = jdbcTemplate;
         this.cryptoRepository = cryptoRepository;
         this.mtvCryptoRepository = mtvCryptoRepository;
         this.fondRepository = fondRepository;
         this.fondService = fondsService;
         this.histoCryptoService = histoCryptoService;
+        this.commissionService = commissionService;
     }
 
     public List<SoldeCryptoDTO> getPortefeuille(Integer idUser) {

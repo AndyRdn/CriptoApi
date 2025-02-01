@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/commission")
@@ -27,8 +29,9 @@ public class CommisionController {
     }
 
     @PostMapping("/configVente")
-    public ResponseEntity<?> configV(@RequestParam int valeur){
+    public ResponseEntity<?> configV(@RequestBody Map<String, String> payload) {
         try {
+            int valeur = Integer.parseInt(payload.get("valeur"));
             commissionService.changeConfigV(valeur);
             return ResponseEntity.status(HttpStatus.OK).body("succes");
         } catch (Exception e) {
@@ -37,8 +40,9 @@ public class CommisionController {
     }
 
     @PostMapping("/configAchat")
-    public ResponseEntity<?> configA(@RequestParam int valeur){
+    public ResponseEntity<?> configA(@RequestBody Map<String, String> payload){
         try {
+            int valeur = Integer.parseInt(payload.get("valeur"));
             commissionService.changeConfigA(valeur);
             return ResponseEntity.status(HttpStatus.OK).body("succes");
         } catch (Exception e) {

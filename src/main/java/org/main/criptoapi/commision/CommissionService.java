@@ -28,11 +28,17 @@ public class CommissionService {
     }
 
     public void generateCommisionVente(Crypto c, double prix){
+        System.out.println("COMSSSSS");
+        System.out.println("COMSSSSS");
+        System.out.println("COMSSSSS");
         double comsVente=Double.parseDouble(configService.getValueByKey("comsVente"));
+
+        System.out.println("COMS tsy HITA");
         Commission commission=new Commission();
-        commission.setDaty(LocalDateTime    .now());
+        commission.setDaty(LocalDateTime.now());
         commission.setIdCrypto(c);
         commission.setMontant((prix*comsVente)/100);
+        commissionRepository.save(commission);
     }
 
     public void generateCommissionAchat(Crypto c, double prix){
@@ -41,6 +47,7 @@ public class CommissionService {
         commission.setDaty(LocalDateTime.now());
         commission.setIdCrypto(c);
         commission.setMontant((prix*comsAchat)/100);
+        commissionRepository.save(commission);
     }
 
     public List<CommissionResult> analyseComs(AnalyseComsDTO analyseComsDTO){
