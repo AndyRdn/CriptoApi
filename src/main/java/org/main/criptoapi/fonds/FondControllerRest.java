@@ -29,7 +29,7 @@ public class FondControllerRest {
     }
 
     @PostMapping("/depot")
-    public ResponseEntity<?> depot(@ModelAttribute FondDTO fondDTO){
+    public ResponseEntity<?> depot(@RequestBody FondDTO fondDTO){
         Map<String, Object> bodyContent = new HashMap<>();
         try {
             fondsService.depot(fondDTO);
@@ -46,7 +46,7 @@ public class FondControllerRest {
     }
 
     @PostMapping("/retrait")
-    public ResponseEntity<?> retrait(@ModelAttribute FondDTO fondDTO){
+    public ResponseEntity<?> retrait(@RequestBody FondDTO fondDTO){
 
         Map<String, Object> bodyContent = new HashMap<>();
         try {

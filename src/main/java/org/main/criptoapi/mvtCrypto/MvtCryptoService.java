@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.main.criptoapi.commision.CommissionService;
 import org.main.criptoapi.crypto.Crypto;
@@ -13,6 +14,7 @@ import org.main.criptoapi.fonds.FondRepository;
 import org.main.criptoapi.histoCrypto.HistoCrypto;
 import org.main.criptoapi.histoCrypto.HistoCryptoService;
 import org.main.criptoapi.fonds.FondsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -149,5 +151,52 @@ public class MvtCryptoService {
 
     public ArrayList<FiltreAchatVente> findFiltreAchatVenteByDate(LocalDateTime dateTime){
         return mtvCryptoRepository.findFiltreAchatVenteByDate(dateTime);
+    }
+
+    ArrayList<MtvCrypto> findByUser(Integer idUser){
+        return mtvCryptoRepository.findByUser(idUser);
+    }
+
+    public List<Map<String, Object>> getResultatsRequete(String requeteSql) {
+        return jdbcTemplate.queryForList(requeteSql);
+    }
+
+    public ArrayList<MtvCrypto> searchHistorique(HistoriqueOperationDTO historiqueOperationDTO) {
+        ArrayList<MtvCrypto> mtvCryptos = new ArrayList<>();
+
+        if (!historiqueOperationDTO.getCrypto().equals("")) {
+            mtvCryptos.addAll(mtvCryptoRepository.findByCrypto(Integer.parseInt(historiqueOperationDTO.getCrypto())));
+        } else {
+            mtvCryptos.addAll(mtvCryptoRepository.findAll());
+        }
+
+        if (!historiqueOperationDTO.getMinDate().equals("") && !historiqueOperationDTO.getMaxDate().equals("")) {
+            mtvCryptos = filterByDate(mtvCryptos, historiqueOperationDTO.getMinDate(), historiqueOperationDTO.getMaxDate());
+        } else if (!historiqueOperationDTO.getMinDate().equals("")) {
+            mtvCryptos = filterByDateAfter(mtvCryptos, historiqueOperationDTO.getMinDate());
+        } else if (!historiqueOperationDTO.getMaxDate().equals("")) {
+            mtvCryptos = filterByDateBefore(mtvCryptos, historiqueOperationDTO.getMaxDate());
+        }
+
+        return mtvCryptos;
+    }
+
+    private ArrayList<MtvCrypto> filterByDate(ArrayList<MtvCrypto> mtvCryptos, String minDate, String maxDate) {
+        return new ArrayList<>(mtvCryptos.stream()
+                .filter(mtvCrypto -> mtvCrypto.getDaty().isAfter(LocalDateTime.parse(minDate)))
+                .filter(mtvCrypto -> mtvCrypto.getDaty().isBefore(LocalDateTime.parse(maxDate)))
+                .toList());
+    }
+
+    private ArrayList<MtvCrypto> filterByDateAfter(ArrayList<MtvCrypto> mtvCryptos, String minDate) {
+        return new ArrayList<>(mtvCryptos.stream()
+                .filter(mtvCrypto -> mtvCrypto.getDaty().isAfter(LocalDateTime.parse(minDate)))
+                .toList());
+    }
+
+    private ArrayList<MtvCrypto> filterByDateBefore(ArrayList<MtvCrypto> mtvCryptos, String maxDate) {
+        return new ArrayList<>(mtvCryptos.stream()
+                .filter(mtvCrypto -> mtvCrypto.getDaty().isBefore(LocalDateTime.parse(maxDate)))
+                .toList());
     }
 }

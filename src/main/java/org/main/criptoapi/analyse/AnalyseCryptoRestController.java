@@ -41,8 +41,11 @@ public class AnalyseCryptoRestController {
             String maxDate = analyseRequest.getMaxDate();
             List<Integer> cryptoIds = analyseRequest.getCryptoIds();
 
-            if (cryptoIds == null || cryptoIds.isEmpty() || typeAnalyse == null || minDate == null || maxDate == null) {
+            if (cryptoIds == null || typeAnalyse == null || minDate == null || maxDate == null) {
                 return ResponseEntity.badRequest().body("Missing or invalid parameters");
+            }
+            if(cryptoIds.isEmpty()){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"message\": \"Vous devez au moins choisir un crypto\"}");
             }
 
             System.out.println("typeAnalyse: " + typeAnalyse);
