@@ -10,14 +10,15 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/fond")
 public class FondControllerRest {
+    
 
     private final FondsService fondsService;
     public FondControllerRest(FondsService fondsService) {
         this.fondsService = fondsService;
     }
-
-    @GetMapping("/donnee")
-    public ResponseEntity<?> getFond(@RequestParam Integer id){
+    
+    @GetMapping("/donnee/{id}")
+    public ResponseEntity<?> getFond(@PathVariable Integer id){
 
         try {
             return ResponseEntity.status(HttpStatus.OK).body(fondsService.getFond(id));
@@ -27,7 +28,7 @@ public class FondControllerRest {
     }
 
     @PostMapping("/depot")
-    public ResponseEntity<?> depot(@ModelAttribute FondDTO fondDTO){
+    public ResponseEntity<?> depot(@RequestBody FondDTO fondDTO){
         Map<String, Object> bodyContent = new HashMap<>();
         try {
             fondsService.depot(fondDTO);
@@ -44,7 +45,7 @@ public class FondControllerRest {
     }
 
     @PostMapping("/retrait")
-    public ResponseEntity<?> retrait(@ModelAttribute FondDTO fondDTO){
+    public ResponseEntity<?> retrait(@RequestBody FondDTO fondDTO){
 
         Map<String, Object> bodyContent = new HashMap<>();
         try {
