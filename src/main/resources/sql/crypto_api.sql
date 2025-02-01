@@ -37,7 +37,7 @@ CREATE TABLE Config(
 CREATE TABLE commission(
     id serial primary key ,
     id_crypto int references Crypto(id),
-    daty date,
+    daty timestamp,
     montant double precision
 );
 
@@ -52,6 +52,7 @@ create table histo_Crypto(
                              daty timestamp,
                              valeur decimal(15,2)
 );
+
 
 insert into histo_Crypto values (default, 1, '2024-1-1 10:00:00', 2200.40);
 insert into histo_Crypto values (default, 2, '2024-1-1 10:00:00', 5000.99);
@@ -123,4 +124,55 @@ VALUES
 insert into config values
     (default,'comsAchat', '20'),
     (default,'comsVente', '25');
+
+
+INSERT INTO commission (id_crypto, daty, montant) VALUES (1, '2024-01-05 00:00:00', 120.50);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (2, '2024-01-10 00:00:00', 250.75);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (3, '2024-01-15 00:00:00', 98.30);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (4, '2024-01-20 00:00:00', 180.45);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (5, '2024-01-25 00:00:00', 305.60);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (6, '2024-01-08 00:00:00', 75.20);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2024-01-12 00:00:00', 420.90);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2024-01-18 00:00:00', 150.00);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2024-01-22 00:00:00', 210.35);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2024-01-28 00:00:00', 99.99);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (1, '2024-01-03 00:00:00', 60.75);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (2, '2024-01-07 00:00:00', 130.40);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (3, '2024-01-13 00:00:00', 345.80);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (4, '2024-01-17 00:00:00', 220.90);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (5, '2024-01-21 00:00:00', 110.25);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (6, '2024-01-26 00:00:00', 185.50);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2024-01-29 00:00:00', 275.80);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2024-01-30 00:00:00', 325.45);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2024-01-31 00:00:00', 490.20);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2024-01-02 00:00:00', 210.10);
+
+INSERT INTO commission (id_crypto, daty, montant) VALUES (1, '2024-02-03 00:00:00', 135.75);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (2, '2024-02-07 00:00:00', 260.30);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (3, '2024-02-12 00:00:00', 110.90);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (4, '2024-02-16 00:00:00', 190.60);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (5, '2024-02-22 00:00:00', 310.40);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (6, '2024-02-05 00:00:00', 95.20);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2024-02-11 00:00:00', 405.80);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2024-02-14 00:00:00', 160.00);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2024-02-19 00:00:00', 220.35);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2024-02-25 00:00:00', 109.99);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (1, '2024-02-06 00:00:00', 70.80);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (2, '2024-02-08 00:00:00', 140.50);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (3, '2024-02-15 00:00:00', 360.70);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (4, '2024-02-18 00:00:00', 230.85);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (5, '2024-02-23 00:00:00', 120.15);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (6, '2024-02-27 00:00:00', 195.50);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2024-02-28 00:00:00', 285.80);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2024-02-29 00:00:00', 335.45);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2024-02-02 00:00:00', 500.20);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2024-02-04 00:00:00', 220.10);
+
+INSERT INTO commission (id_crypto, daty, montant) VALUES (5, '2025-02-23 00:00:00', 120.15);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (6, '2025-02-27 00:00:00', 195.50);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2025-02-28 00:00:00', 285.80);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2025-02-29 00:00:00', 335.45);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2025-02-02 00:00:00', 500.20);
+INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2025-02-04 00:00:00', 220.10);
+
 
