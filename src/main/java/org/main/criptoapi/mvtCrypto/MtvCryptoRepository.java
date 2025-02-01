@@ -19,4 +19,10 @@ public interface MtvCryptoRepository extends JpaRepository<MtvCrypto, Integer> {
             "WHERE m.daty < :date " +
             "GROUP BY m.idUser")
     ArrayList<FiltreAchatVente> findFiltreAchatVenteByDate(@Param("date") LocalDateTime date);
+
+    @Query("select mvt from MtvCrypto mvt where mvt.idUser = :idUser")
+    ArrayList<MtvCrypto> findByUser(@Param("idUser") Integer idUser);
+
+    @Query("select mvt from MtvCrypto mvt where mvt.idCrypto.id = :idCrypto")
+    ArrayList<MtvCrypto> findByCrypto(@Param("idCrypto") Integer idCrypto);
 }

@@ -87,6 +87,15 @@ public class MvtCryptoRestController {
         }
     }
 
+    @GetMapping("/list/{idUser}")
+    public ResponseEntity<?> listMvtPerso(@PathVariable Integer idUser){
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mvtCryptoService.findByUser(idUser));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @PostMapping("/search")
     public ResponseEntity<?> filtreAchatVente(@RequestBody FiltreAchatVenteDTO filtreAchatVenteDTO){
         try{
@@ -96,6 +105,17 @@ public class MvtCryptoRestController {
 
             ArrayList<FiltreAchatVente> filtreAchatVentes = mvtCryptoService.findFiltreAchatVenteByDate(dateTime);
             return ResponseEntity.status(HttpStatus.OK).body(filtreAchatVentes);
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/historique/search")
+    public ResponseEntity<?> searchHistorique(@RequestBody HistoriqueOperationDTO historiqueOperationDTO){
+        try{
+            ArrayList<MtvCrypto> searchHistorique = mvtCryptoService.searchHistorique(historiqueOperationDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(searchHistorique);
 
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
