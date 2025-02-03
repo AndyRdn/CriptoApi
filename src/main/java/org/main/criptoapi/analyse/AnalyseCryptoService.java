@@ -116,7 +116,7 @@ public class AnalyseCryptoService {
 
     public double calculEcartType (List<Double> valeurCrypto, double avg){
 
-        if(valeurCrypto.size()==0) return 0;
+        if(valeurCrypto.size()<2) return 0;
 
         double ecartType = 0;
         for (int i = 0; i < valeurCrypto.size(); i++) {
@@ -132,7 +132,7 @@ public class AnalyseCryptoService {
 
     public double calculQuartile(List<Double> valeurCrypto){
 
-        if(valeurCrypto.size()==0) return 0;
+        if(valeurCrypto.size()<2) return 0;
 
         double position = (valeurCrypto.size()+1)/4;
         if(position%1==0){

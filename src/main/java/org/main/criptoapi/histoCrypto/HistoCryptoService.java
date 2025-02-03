@@ -38,7 +38,7 @@ public class HistoCryptoService {
         return histoCryptoRepository.findLastValueForEachCrypto(nb);
     }
 
-   @Scheduled(fixedRate = 10000)
+//   @Scheduled(fixedRate = 10000)
     public void generateCryptoValues(){
         List<Crypto> cryptoList = cryptoRepository.findAll();
         List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto(cryptoList.size());

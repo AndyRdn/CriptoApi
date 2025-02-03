@@ -53,6 +53,15 @@ create table histo_Crypto(
                              valeur decimal(15,2)
 );
 
+create table demmande(
+    id serial primary key ,
+    id_user int,
+    depot numeric(15,2),
+    retrait numeric(15,2),
+    daty timestamp,
+    etat int
+);
+
 
 insert into histo_Crypto values (default, 1, '2024-1-1 10:00:00', 2200.40);
 insert into histo_Crypto values (default, 2, '2024-1-1 10:00:00', 5000.99);
