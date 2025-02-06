@@ -53,6 +53,12 @@ create table histo_Crypto(
                              valeur decimal(15,2)
 );
 
+create table favorie(
+    id serial primary key ,
+    idUser int ,
+    daty timestamp,
+    id_crypto int references crypto(id)
+);
 
 insert into histo_Crypto values (default, 1, '2024-1-1 10:00:00', 2200.40);
 insert into histo_Crypto values (default, 2, '2024-1-1 10:00:00', 5000.99);
@@ -124,6 +130,22 @@ VALUES
 insert into config values
     (default,'comsAchat', '20'),
     (default,'comsVente', '25');
+
+INSERT INTO favorie (idUser, daty, id_crypto) VALUES
+                                                  (1, '2023-10-01 08:15:00', 1),
+                                                  (1, '2023-10-02 12:30:00', 3),
+                                                  (1, '2023-10-03 16:45:00', 7),
+                                                  (2, '2023-10-01 09:00:00', 2),
+                                                  (2, '2023-10-02 14:20:00', 5),
+                                                  (2, '2023-10-03 18:10:00', 9),
+                                                  (3, '2023-10-01 10:05:00', 4),
+                                                  (3, '2023-10-02 13:40:00', 6),
+                                                  (3, '2023-10-03 17:55:00', 8),
+                                                  (3, '2023-10-04 19:30:00', 10),
+                                                  (4, '2023-10-01 10:05:00', 4),
+                                                  (4, '2023-10-02 13:40:00', 6),
+                                                  (4, '2023-10-03 17:55:00', 8),
+                                                  (4, '2023-10-04 19:30:00', 10);
 
 
 INSERT INTO commission (id_crypto, daty, montant) VALUES (1, '2024-01-05 00:00:00', 120.50);
