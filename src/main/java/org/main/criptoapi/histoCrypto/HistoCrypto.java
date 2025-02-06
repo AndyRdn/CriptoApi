@@ -11,7 +11,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "histoCrypto")
+@Table(name = "histo_crypto")
 public class HistoCrypto {
 
     @Id
@@ -19,7 +19,7 @@ public class HistoCrypto {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_crypto")
     private Crypto idCrypto;
 
