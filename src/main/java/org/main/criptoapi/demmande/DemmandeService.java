@@ -3,8 +3,11 @@ package org.main.criptoapi.demmande;
 import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondDTO;
 import org.main.criptoapi.fonds.FondRepository;
+import org.main.criptoapi.notifications.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.firebase.messaging.FirebaseMessagingException;
 
 import java.util.List;
 
@@ -16,6 +19,9 @@ public class DemmandeService {
 
     @Autowired
     private FondRepository fondRepository;
+
+    @Autowired
+    private NotificationService notificationService;
 
     public void demmandeDepot(FondDTO fondDTO){
         Demmande demmande = new Demmande();
@@ -39,7 +45,7 @@ public class DemmandeService {
         demmandeRepository.save(demmande);
     }
 
-    public void validation(Integer id){
+    public void validation(Integer id) throws FirebaseMessagingException{
         Demmande demmande = demmandeRepository.findById(id).get();
 
         Fond fond = new Fond();
@@ -52,14 +58,19 @@ public class DemmandeService {
 
         demmandeRepository.save(demmande);
         fondRepository.save(fond);
+
+        notificationService.sendDemandeNotification(demmande);
+
     }
 
-    public void refus(Integer id){
+    public void refus(Integer id) throws FirebaseMessagingException{
         Demmande demmande = demmandeRepository.findById(id).get();
 
         demmande.setEtat(0);
 
         demmandeRepository.save(demmande);
+
+        notificationService.sendDemandeNotification(demmande);
     }
 
     public List<Demmande> demmandeToValidate(){

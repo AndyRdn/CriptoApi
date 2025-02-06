@@ -13,10 +13,13 @@ import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondRepository;
 import org.main.criptoapi.histoCrypto.HistoCrypto;
 import org.main.criptoapi.histoCrypto.HistoCryptoService;
+import org.main.criptoapi.notifications.NotificationService;
 import org.main.criptoapi.fonds.FondsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+
+import com.google.firebase.messaging.FirebaseMessagingException;
 
 @Service
 public class MvtCryptoService {
@@ -27,9 +30,11 @@ public class MvtCryptoService {
     HistoCryptoService histoCryptoService;
     FondsService fondService;
     CommissionService commissionService;
+    NotificationService notificationService;
 
-    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService) {
+    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService, NotificationService notificationService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.notificationService = notificationService;
         this.cryptoRepository = cryptoRepository;
         this.mtvCryptoRepository = mtvCryptoRepository;
         this.fondRepository = fondRepository;
@@ -87,7 +92,7 @@ public class MvtCryptoService {
                 new Object[] { idUser, idCrypto });
     }
 
-    public void sellCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException {
+    public void sellCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException, FirebaseMessagingException {
         Integer inAccount = getPortefeuille(idUser, c.getId());
         if (inAccount == null || inAccount.compareTo(quantite) < 0) {
             throw new IllegalArgumentException("Quantity of crypto to be sold must be inferior or equal to account balance");
@@ -114,9 +119,11 @@ public class MvtCryptoService {
         f.setDaty(LocalDateTime.now());
 
         f = fondRepository.save(f);
+
+        notificationService.sendOperationNotification(newMvt);
     }
 
-    public void buyCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException {
+    public void buyCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException, FirebaseMessagingException {
         Double inAccount = fondService.getFond(idUser); 
 
         HistoCrypto hc = histoCryptoService.findActualValueCrypto(c.getId()).get();
@@ -144,6 +151,9 @@ public class MvtCryptoService {
         f.setDaty(LocalDateTime.now());
 
         f = fondRepository.save(f);
+
+        notificationService.sendOperationNotification(newMvt);
+
     }
 
     public List<MtvCrypto> getList(){
