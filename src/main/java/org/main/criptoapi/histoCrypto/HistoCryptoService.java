@@ -2,6 +2,7 @@ package org.main.criptoapi.histoCrypto;
 
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
+import org.main.criptoapi.firebase.RTDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class HistoCryptoService {
     @Autowired
     private CryptoRepository cryptoRepository;
 
+    @Autowired
+    private RTDBService rtdbService;
+
     public Optional<HistoCrypto> findActualValueCrypto(Integer idCrypto){
         return histoCryptoRepository.findActualCryptoValue(idCrypto);
     }
@@ -38,7 +42,7 @@ public class HistoCryptoService {
         return histoCryptoRepository.findLastValueForEachCrypto(nb);
     }
 
-//   @Scheduled(fixedRate = 10000)
+   @Scheduled(fixedRate = 10000)
     public void generateCryptoValues(){
         List<Crypto> cryptoList = cryptoRepository.findAll();
         List<HistoCrypto> histoCryptoList = histoCryptoRepository.findLastValueForEachCrypto(cryptoList.size());
@@ -53,6 +57,9 @@ public class HistoCryptoService {
             histoCrypto.setValeur(valeur);
 
             histoCryptoRepository.save(histoCrypto);
+            HistoCryptoFirebase histoCryptoFirebase = new HistoCryptoFirebase(histoCrypto.getId(), histoCrypto.getIdCrypto(), histoCrypto.getDaty());
+            histoCryptoFirebase.convertBigDecimalToDouble(histoCrypto.getValeur());
+            rtdbService.sendData("histo-crypto/", histoCryptoFirebase);
         }
 
         System.out.println("Crypto mis a jour");

@@ -14,10 +14,11 @@ public class FirebaseConfig {
     
     @PostConstruct
     public void initialize() throws IOException {
-        InputStream serviceAccount = getClass().getResourceAsStream("/firebase-service-account.json");
+        InputStream serviceAccount = getClass().getResourceAsStream("/service-account.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setDatabaseUrl("https://prise-en-main-676d4-default-rtdb.europe-west1.firebasedatabase.app")
                 .build();
 
         if (FirebaseApp.getApps().isEmpty()) {

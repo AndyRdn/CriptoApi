@@ -7,7 +7,7 @@ services:
     depends_on:
       - pg-java
     environment:
-      - SPRING_DATASOURCE_URL = jdbc:postgresql://pg-java:5432/crypto
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://pg-java:5432/crypto
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=admin
     ports:
