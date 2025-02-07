@@ -7,11 +7,20 @@ import java.util.Locale;
 
 import org.main.criptoapi.demmande.Demmande;
 import org.main.criptoapi.mvtCrypto.MtvCrypto;
+import org.main.criptoapi.utilisateur.UtilisateurDTO;
+import org.main.criptoapi.utilisateur.UtilisateurService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationService {
-    
+
+    private final UtilisateurService utilisateurService;
+
+    public NotificationService(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
+    }
+
     public String sendToTopic(String topic, String title, String content) 
         throws FirebaseMessagingException {
         
@@ -30,7 +39,13 @@ public class NotificationService {
         String typeTransact = mvt.getAchat() == 0 ? "vendu" : "acheté";
         Integer qte = mvt.getAchat() == 0 ? mvt.getVente() : mvt.getAchat();
 
-        String body = String.format("%s a %s %d de %s à %.2f € l'unité", mvt.getIdUser(), typeTransact, qte, mvt.getIdCrypto().getNom(), mvt.getValeur());
+        UtilisateurDTO user;
+        try {
+            user = utilisateurService.getUserById(mvt.getIdUser());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        String body = String.format("%s a %s %d de %s à %.2f € l'unité", user.getNom(), typeTransact, qte, mvt.getIdCrypto().getNom(), mvt.getValeur());
         
         return body;
     }
