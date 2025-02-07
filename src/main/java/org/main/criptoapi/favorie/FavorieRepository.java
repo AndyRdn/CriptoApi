@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface FavorieRepository extends JpaRepository<Favorie, Integer> {
     List<Favorie> findByIduser(Integer iduser);
+    void deleteById(Integer id);
 }

@@ -1,5 +1,6 @@
 package org.main.criptoapi.demmande;
 
+import org.main.criptoapi.firebase.FirestoreService;
 import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondDTO;
 import org.main.criptoapi.fonds.FondRepository;
@@ -23,6 +24,9 @@ public class DemmandeService {
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private FirestoreService firestoreService;
+
     public void demmandeDepot(FondDTO fondDTO){
         Demmande demmande = new Demmande();
         demmande.setDepot(fondDTO.getSomme());
@@ -32,6 +36,9 @@ public class DemmandeService {
         demmande.setEtat(1);
 
         demmandeRepository.save(demmande);
+        DemandeFirebase df = new DemandeFirebase(demmande.getId(), demmande.getIduser(), demmande.getDepot(), demmande.getRetrait(), demmande.getDaty(), demmande.getEtat());
+
+        firestoreService.sendData("demande", demmande.getId().toString(), df);
     }
 
     public void demmandeRetrait(FondDTO fondDTO){
@@ -43,6 +50,9 @@ public class DemmandeService {
         demmande.setEtat(1);
 
         demmandeRepository.save(demmande);
+        DemandeFirebase df = new DemandeFirebase(demmande.getId(), demmande.getIduser(), demmande.getDepot(), demmande.getRetrait(), demmande.getDaty(), demmande.getEtat());
+
+        firestoreService.sendData("demande", demmande.getId().toString(), df);
     }
 
     public void validation(Integer id) throws FirebaseMessagingException{
@@ -57,10 +67,12 @@ public class DemmandeService {
         demmande.setEtat(11);
 
         demmandeRepository.save(demmande);
+        DemandeFirebase df = new DemandeFirebase(demmande.getId(), demmande.getIduser(), demmande.getDepot(), demmande.getRetrait(), demmande.getDaty(), demmande.getEtat());
+
         fondRepository.save(fond);
 
         notificationService.sendDemandeNotification(demmande);
-
+        firestoreService.updateData("demande", demmande.getId().toString(), df);
     }
 
     public void refus(Integer id) throws FirebaseMessagingException{
@@ -69,8 +81,10 @@ public class DemmandeService {
         demmande.setEtat(0);
 
         demmandeRepository.save(demmande);
+        DemandeFirebase df = new DemandeFirebase(demmande.getId(), demmande.getIduser(), demmande.getDepot(), demmande.getRetrait(), demmande.getDaty(), demmande.getEtat());
 
         notificationService.sendDemandeNotification(demmande);
+        firestoreService.updateData("demande", demmande.getId().toString(), df);
     }
 
     public List<Demmande> demmandeToValidate(){

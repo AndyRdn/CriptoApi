@@ -9,6 +9,7 @@ import java.util.Map;
 import org.main.criptoapi.commision.CommissionService;
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
+import org.main.criptoapi.firebase.FirestoreService;
 import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondRepository;
 import org.main.criptoapi.histoCrypto.HistoCrypto;
@@ -23,16 +24,17 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 
 @Service
 public class MvtCryptoService {
-    JdbcTemplate jdbcTemplate;
-    CryptoRepository cryptoRepository;
-    MtvCryptoRepository mtvCryptoRepository;
-    FondRepository fondRepository;
-    HistoCryptoService histoCryptoService;
-    FondsService fondService;
-    CommissionService commissionService;
-    NotificationService notificationService;
+    private final JdbcTemplate jdbcTemplate;
+    private final CryptoRepository cryptoRepository;
+    private final MtvCryptoRepository mtvCryptoRepository;
+    private final FondRepository fondRepository;
+    private final HistoCryptoService histoCryptoService;
+    private final FondsService fondService;
+    private final CommissionService commissionService;
+    private final NotificationService notificationService;
+    private final FirestoreService firestoreService;
 
-    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService, NotificationService notificationService) {
+    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService, NotificationService notificationService, FirestoreService firestoreService) {
         this.jdbcTemplate = jdbcTemplate;
         this.notificationService = notificationService;
         this.cryptoRepository = cryptoRepository;
@@ -41,6 +43,7 @@ public class MvtCryptoService {
         this.fondService = fondsService;
         this.histoCryptoService = histoCryptoService;
         this.commissionService = commissionService;
+        this.firestoreService = firestoreService;
     }
 
     public List<SoldeCryptoDTO> getPortefeuille(Integer idUser) {
@@ -111,6 +114,9 @@ public class MvtCryptoService {
         newMvt.setValeur(BigDecimal.valueOf(cryptoValue));
 
         newMvt = mtvCryptoRepository.save(newMvt);
+        MvtCryptoFirebase mvtFb = new MvtCryptoFirebase(newMvt.getId(), newMvt.getIdCrypto(), newMvt.getIdUser(), newMvt.getAchat(), newMvt.getVente(), newMvt.getDaty(), newMvt.getValeur());
+
+        firestoreService.sendData("mvt_crypto", newMvt.getId().toString(), mvtFb);
 
         Fond f = new Fond();
         f.setIduser(idUser);
@@ -143,6 +149,8 @@ public class MvtCryptoService {
         newMvt.setValeur(BigDecimal.valueOf(cryptoValue));
 
         newMvt = mtvCryptoRepository.save(newMvt);
+        MvtCryptoFirebase mvtFb = new MvtCryptoFirebase(newMvt.getId(), newMvt.getIdCrypto(), newMvt.getIdUser(), newMvt.getAchat(), newMvt.getVente(), newMvt.getDaty(), newMvt.getValeur());
+        firestoreService.sendData("mvt_crypto", newMvt.getId().toString(), mvtFb);
 
         Fond f = new Fond();
         f.setIduser(idUser);
