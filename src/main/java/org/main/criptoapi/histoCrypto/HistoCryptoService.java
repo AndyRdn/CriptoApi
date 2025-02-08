@@ -2,6 +2,7 @@ package org.main.criptoapi.histoCrypto;
 
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
+import org.main.criptoapi.firebase.FirestoreService;
 import org.main.criptoapi.firebase.RTDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,7 +28,7 @@ public class HistoCryptoService {
     private CryptoRepository cryptoRepository;
 
     @Autowired
-    private RTDBService rtdbService;
+    private FirestoreService rtdbService;
 
     public Optional<HistoCrypto> findActualValueCrypto(Integer idCrypto){
         return histoCryptoRepository.findActualCryptoValue(idCrypto);
@@ -59,20 +60,26 @@ public class HistoCryptoService {
             histoCryptoRepository.save(histoCrypto);
             HistoCryptoFirebase histoCryptoFirebase = new HistoCryptoFirebase(histoCrypto.getId(), histoCrypto.getIdCrypto(), histoCrypto.getDaty());
             histoCryptoFirebase.convertBigDecimalToDouble(histoCrypto.getValeur());
-            rtdbService.sendData("histo-crypto/", histoCryptoFirebase);
+            rtdbService.sendData("histo-crypto", histoCryptoFirebase.getId().toString(), histoCryptoFirebase);
         }
 
         System.out.println("Crypto mis a jour");
     }
 
-    public BigDecimal randomValue(BigDecimal bigDecimal){
+    public BigDecimal randomValue(BigDecimal bigDecimal) {
         BigDecimal currentValue = bigDecimal;
+        double val = currentValue.doubleValue();
+        double minusDelta = -val * 0.3;
+        double minus2Delta = -val * 0.6;
+        double plusDelta = val * 0.3;
+        double plus2Delta = val * 0.6;
+        double[] deltas = {minusDelta, minus2Delta, plusDelta, plus2Delta};
         Random random = new Random();
-        double randomPercentage = random.nextDouble() * 0.6 - 0.3;
-        BigDecimal percentageChange = currentValue.multiply(BigDecimal.valueOf(randomPercentage));
-        BigDecimal newValue = currentValue.add(percentageChange);
+        int randomIndex = random.nextInt(4);
+        System.out.println("randomPercentage: " + randomIndex);
+        BigDecimal delta = BigDecimal.valueOf(deltas[randomIndex]);
+        BigDecimal newValue = currentValue.add(delta);
         newValue = newValue.setScale(2, RoundingMode.HALF_UP);
-
         return newValue;
     }
 

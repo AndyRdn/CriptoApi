@@ -81,6 +81,7 @@ public class FirestoreService {
                         DocumentSnapshot doc = change.getDocument();
                         String docId = doc.getId();
 
+                        System.out.println(change.getType() + " => " + docId);
                         switch (change.getType()) {
                             case ADDED:
                                 Favorie favoris = new Favorie();
