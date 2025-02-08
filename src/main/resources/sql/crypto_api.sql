@@ -46,11 +46,11 @@ CREATE OR REPLACE VIEW v_solde_cryptos AS
     SELECT id_user, id_crypto, SUM(achat) - SUM(vente) AS quantite FROM mtv_crypto GROUP BY id_user, id_crypto ORDER BY id_user
 );
 
-create table histo_Crypto(
-                             id serial primary key ,
-                             id_Crypto int,
-                             daty timestamp,
-                             valeur decimal(15,2)
+CREATE TABLE histo_Crypto (
+  id serial PRIMARY KEY,
+  id_Crypto int,
+  daty timestamp DEFAULT now(),
+  valeur decimal(15,2)
 );
 
 create table demmande(
@@ -70,16 +70,16 @@ create table favorie(
     id_crypto int references crypto(id)
 );
 
-insert into histo_Crypto values (default, 1, '2024-1-1 10:00:00', 2200.40);
-insert into histo_Crypto values (default, 2, '2024-1-1 10:00:00', 5000.99);
-insert into histo_Crypto values (default, 3, '2024-1-1 10:00:00', 1500.50);
-insert into histo_Crypto values (default, 4, '2024-1-1 10:00:00', 1800.60);
-insert into histo_Crypto values (default, 5, '2024-1-1 10:00:00', 3200.75);
-insert into histo_Crypto values (default, 6, '2024-1-1 10:00:00', 4100.80);
-insert into histo_Crypto values (default, 7, '2024-1-1 10:00:00', 750.30);
-insert into histo_Crypto values (default, 8, '2024-1-1 10:00:00', 1200.35);
-insert into histo_Crypto values (default, 9, '2024-1-1 10:00:00', 300.25);
-insert into histo_Crypto values (default, 10, '2024-1-1 10:00:00', 6500.99);
+insert into histo_Crypto values (default, 1, null, 2200.40);
+insert into histo_Crypto values (default, 2, null, 5000.99);
+insert into histo_Crypto values (default, 3, null, 1500.50);
+insert into histo_Crypto values (default, 4, null, 1800.60);
+insert into histo_Crypto values (default, 5, null, 3200.75);
+insert into histo_Crypto values (default, 6, null, 4100.80);
+insert into histo_Crypto values (default, 7, null, 750.30);
+insert into histo_Crypto values (default, 8, null, 1200.35);
+insert into histo_Crypto values (default, 9, null, 300.25);
+insert into histo_Crypto values (default, 10, null, 6500.99);
 
 CREATE OR REPLACE VIEW v_solde_user AS
 (
