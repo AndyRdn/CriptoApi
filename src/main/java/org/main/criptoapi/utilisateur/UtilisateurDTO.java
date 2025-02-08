@@ -1,26 +1,23 @@
 package org.main.criptoapi.utilisateur;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UtilisateurDTO {
     private int id;
     private String nom;
     private String prenom;
-    private LocalDateTime dateNaissance;
+    private Instant dateNaissance;
     private int genre;
+    private String photoProfile;
     private String mail;
 
-    public UtilisateurDTO(int id, String nom, String prenom, LocalDateTime dateNaissance, int genre, String mail) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.dateNaissance = dateNaissance;
-        this.genre = genre;
-        this.mail = mail;
-    }
+    public UtilisateurDTO() {}
 }
