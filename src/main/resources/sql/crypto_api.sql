@@ -46,11 +46,11 @@ CREATE OR REPLACE VIEW v_solde_cryptos AS
     SELECT id_user, id_crypto, SUM(achat) - SUM(vente) AS quantite FROM mtv_crypto GROUP BY id_user, id_crypto ORDER BY id_user
 );
 
-create table histo_Crypto(
-                             id serial primary key ,
-                             id_Crypto int,
-                             daty timestamp,
-                             valeur decimal(15,2)
+CREATE TABLE histo_Crypto (
+  id serial PRIMARY KEY,
+  id_Crypto int,
+  daty timestamp DEFAULT now(),
+  valeur decimal(15,2)
 );
 
 create table demmande(
@@ -63,16 +63,23 @@ create table demmande(
 );
 
 
-insert into histo_Crypto values (default, 1, '2024-1-1 10:00:00', 2200.40);
-insert into histo_Crypto values (default, 2, '2024-1-1 10:00:00', 5000.99);
-insert into histo_Crypto values (default, 3, '2024-1-1 10:00:00', 1500.50);
-insert into histo_Crypto values (default, 4, '2024-1-1 10:00:00', 1800.60);
-insert into histo_Crypto values (default, 5, '2024-1-1 10:00:00', 3200.75);
-insert into histo_Crypto values (default, 6, '2024-1-1 10:00:00', 4100.80);
-insert into histo_Crypto values (default, 7, '2024-1-1 10:00:00', 750.30);
-insert into histo_Crypto values (default, 8, '2024-1-1 10:00:00', 1200.35);
-insert into histo_Crypto values (default, 9, '2024-1-1 10:00:00', 300.25);
-insert into histo_Crypto values (default, 10, '2024-1-1 10:00:00', 6500.99);
+create table favorie(
+    id serial primary key ,
+    idUser int ,
+    daty timestamp,
+    id_crypto int references crypto(id)
+);
+
+insert into histo_Crypto values (default, 1, null, 2200.40);
+insert into histo_Crypto values (default, 2, null, 5000.99);
+insert into histo_Crypto values (default, 3, null, 1500.50);
+insert into histo_Crypto values (default, 4, null, 1800.60);
+insert into histo_Crypto values (default, 5, null, 3200.75);
+insert into histo_Crypto values (default, 6, null, 4100.80);
+insert into histo_Crypto values (default, 7, null, 750.30);
+insert into histo_Crypto values (default, 8, null, 1200.35);
+insert into histo_Crypto values (default, 9, null, 300.25);
+insert into histo_Crypto values (default, 10, null, 6500.99);
 
 CREATE OR REPLACE VIEW v_solde_user AS
 (
@@ -134,6 +141,22 @@ insert into config values
     (default,'comsAchat', '20'),
     (default,'comsVente', '25');
 
+INSERT INTO favorie (idUser, daty, id_crypto) VALUES
+                                                  (1, '2023-10-01 08:15:00', 1),
+                                                  (1, '2023-10-02 12:30:00', 3),
+                                                  (1, '2023-10-03 16:45:00', 7),
+                                                  (2, '2023-10-01 09:00:00', 2),
+                                                  (2, '2023-10-02 14:20:00', 5),
+                                                  (2, '2023-10-03 18:10:00', 9),
+                                                  (3, '2023-10-01 10:05:00', 4),
+                                                  (3, '2023-10-02 13:40:00', 6),
+                                                  (3, '2023-10-03 17:55:00', 8),
+                                                  (3, '2023-10-04 19:30:00', 10),
+                                                  (4, '2023-10-01 10:05:00', 4),
+                                                  (4, '2023-10-02 13:40:00', 6),
+                                                  (4, '2023-10-03 17:55:00', 8),
+                                                  (4, '2023-10-04 19:30:00', 10);
+
 
 INSERT INTO commission (id_crypto, daty, montant) VALUES (1, '2024-01-05 00:00:00', 120.50);
 INSERT INTO commission (id_crypto, daty, montant) VALUES (2, '2024-01-10 00:00:00', 250.75);
@@ -176,12 +199,5 @@ INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2024-02-28 00:00:0
 INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2024-02-29 00:00:00', 335.45);
 INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2024-02-02 00:00:00', 500.20);
 INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2024-02-04 00:00:00', 220.10);
-
-INSERT INTO commission (id_crypto, daty, montant) VALUES (5, '2025-02-23 00:00:00', 120.15);
-INSERT INTO commission (id_crypto, daty, montant) VALUES (6, '2025-02-27 00:00:00', 195.50);
-INSERT INTO commission (id_crypto, daty, montant) VALUES (7, '2025-02-28 00:00:00', 285.80);
-INSERT INTO commission (id_crypto, daty, montant) VALUES (8, '2025-02-29 00:00:00', 335.45);
-INSERT INTO commission (id_crypto, daty, montant) VALUES (9, '2025-02-02 00:00:00', 500.20);
-INSERT INTO commission (id_crypto, daty, montant) VALUES (10, '2025-02-04 00:00:00', 220.10);
 
 

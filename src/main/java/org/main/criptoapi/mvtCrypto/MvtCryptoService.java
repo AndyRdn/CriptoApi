@@ -9,33 +9,41 @@ import java.util.Map;
 import org.main.criptoapi.commision.CommissionService;
 import org.main.criptoapi.crypto.Crypto;
 import org.main.criptoapi.crypto.CryptoRepository;
+import org.main.criptoapi.firebase.FirestoreService;
 import org.main.criptoapi.fonds.Fond;
 import org.main.criptoapi.fonds.FondRepository;
 import org.main.criptoapi.histoCrypto.HistoCrypto;
 import org.main.criptoapi.histoCrypto.HistoCryptoService;
+import org.main.criptoapi.notifications.NotificationService;
 import org.main.criptoapi.fonds.FondsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
+
 @Service
 public class MvtCryptoService {
-    JdbcTemplate jdbcTemplate;
-    CryptoRepository cryptoRepository;
-    MtvCryptoRepository mtvCryptoRepository;
-    FondRepository fondRepository;
-    HistoCryptoService histoCryptoService;
-    FondsService fondService;
-    CommissionService commissionService;
+    private final JdbcTemplate jdbcTemplate;
+    private final CryptoRepository cryptoRepository;
+    private final MtvCryptoRepository mtvCryptoRepository;
+    private final FondRepository fondRepository;
+    private final HistoCryptoService histoCryptoService;
+    private final FondsService fondService;
+    private final CommissionService commissionService;
+    private final NotificationService notificationService;
+    private final FirestoreService firestoreService;
 
-    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService) {
+    public MvtCryptoService(JdbcTemplate jdbcTemplate, CryptoRepository cryptoRepository, MtvCryptoRepository mtvCryptoRepository, FondRepository fondRepository, HistoCryptoService histoCryptoService, FondsService fondsService, CommissionService commissionService, NotificationService notificationService, FirestoreService firestoreService) {
         this.jdbcTemplate = jdbcTemplate;
+        this.notificationService = notificationService;
         this.cryptoRepository = cryptoRepository;
         this.mtvCryptoRepository = mtvCryptoRepository;
         this.fondRepository = fondRepository;
         this.fondService = fondsService;
         this.histoCryptoService = histoCryptoService;
         this.commissionService = commissionService;
+        this.firestoreService = firestoreService;
     }
 
     public List<SoldeCryptoDTO> getPortefeuille(Integer idUser) {
@@ -87,7 +95,7 @@ public class MvtCryptoService {
                 new Object[] { idUser, idCrypto });
     }
 
-    public void sellCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException {
+    public void sellCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException, FirebaseMessagingException {
         Integer inAccount = getPortefeuille(idUser, c.getId());
         if (inAccount == null || inAccount.compareTo(quantite) < 0) {
             throw new IllegalArgumentException("Quantity of crypto to be sold must be inferior or equal to account balance");
@@ -106,6 +114,9 @@ public class MvtCryptoService {
         newMvt.setValeur(BigDecimal.valueOf(cryptoValue));
 
         newMvt = mtvCryptoRepository.save(newMvt);
+        MvtCryptoFirebase mvtFb = new MvtCryptoFirebase(newMvt.getId(), newMvt.getIdCrypto(), newMvt.getIdUser(), newMvt.getAchat(), newMvt.getVente(), newMvt.getDaty(), newMvt.getValeur());
+
+        firestoreService.sendData("mvt_crypto", newMvt.getId().toString(), mvtFb);
 
         Fond f = new Fond();
         f.setIduser(idUser);
@@ -114,9 +125,11 @@ public class MvtCryptoService {
         f.setDaty(LocalDateTime.now());
 
         f = fondRepository.save(f);
+
+        notificationService.sendOperationNotification(newMvt);
     }
 
-    public void buyCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException {
+    public void buyCrypto(Integer idUser, Crypto c, int quantite) throws IllegalArgumentException, FirebaseMessagingException {
         Double inAccount = fondService.getFond(idUser); 
 
         HistoCrypto hc = histoCryptoService.findActualValueCrypto(c.getId()).get();
@@ -136,6 +149,8 @@ public class MvtCryptoService {
         newMvt.setValeur(BigDecimal.valueOf(cryptoValue));
 
         newMvt = mtvCryptoRepository.save(newMvt);
+        MvtCryptoFirebase mvtFb = new MvtCryptoFirebase(newMvt.getId(), newMvt.getIdCrypto(), newMvt.getIdUser(), newMvt.getAchat(), newMvt.getVente(), newMvt.getDaty(), newMvt.getValeur());
+        firestoreService.sendData("mvt_crypto", newMvt.getId().toString(), mvtFb);
 
         Fond f = new Fond();
         f.setIduser(idUser);
@@ -144,6 +159,9 @@ public class MvtCryptoService {
         f.setDaty(LocalDateTime.now());
 
         f = fondRepository.save(f);
+
+        notificationService.sendOperationNotification(newMvt);
+
     }
 
     public List<MtvCrypto> getList(){
