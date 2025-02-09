@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -72,9 +73,14 @@ public class FirestoreService {
                         return;
                     }
 
-                    if (snapshots == null || snapshots.isEmpty()) {
-                        System.out.println("No changes detected in favoris.");
+                    if (snapshots == null) {
+                        System.out.println("No snapshot available.");
                         return;
+                    }
+
+                    List<DocumentChange> changes = snapshots.getDocumentChanges();
+                    if (changes.isEmpty()) {
+                        System.out.println("No document changes detected in favoris.");
                     }
 
                     for (DocumentChange change : snapshots.getDocumentChanges()) {
